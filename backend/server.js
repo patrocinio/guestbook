@@ -7,7 +7,7 @@
 var express    = require('express');        // call express
 var app        = express();                 // define our app using express
 var bodyParser = require('body-parser');
-var targetStocks = require('./target_stocks');
+var backend    = require('./backend');
 
 // configure app to use bodyParser()
 // this will let us get the data from a POST
@@ -21,8 +21,12 @@ var port = process.env.PORT || 8080;        // set our port
 var router = express.Router();              // get an instance of the express Router
 
 // test route to make sure everything is working (accessed at GET http://localhost:8080/api)
-router.get('/getStocks', function(req, res) {
-	targetStocks.getStocks(req, res)
+router.get('/get', function(req, res) {
+	backend.get(req, res)
+});
+
+router.post('/append', function(req, res) {
+	backend.append(req, res)
 });
 
 router.get('/', function(req, res) {
@@ -39,4 +43,3 @@ app.use('/', router);
 // =============================================================================
 app.listen(port);
 console.log('Magic happens on port ' + port);
-
