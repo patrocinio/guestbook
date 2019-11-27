@@ -16,7 +16,8 @@ spec:
     spec:
       containers:
       - name: php-redis
-        image: docker.io/patrocinio/gb-frontend:v6
+        image: docker.io/patrocinio/gb-frontend-amd64:v7
+        imagePullPolicy: Always
         resources:
           requests:
             cpu: 100m

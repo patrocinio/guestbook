@@ -1,17 +1,12 @@
 var redisApp = angular.module('redis', ['ui.bootstrap']);
 
-/**
- * Constructor
- */
 function RedisController() {}
 
 RedisController.prototype.onRedis = function() {
-    this.scope_.messages.push(this.scope_.msg);
-    this.scope_.msg = "";
-    var value = this.scope_.messages.join();
-    this.http_.get("guestbook.php?cmd=set&key=messages&value=" + value)
+    this.http_.get("guestbook.php?cmd=append&key=messages&value=" + this.scope_.msg)
             .success(angular.bind(this, function(data) {
-                this.scope_.redisResponse = "Updated.";
+              console.log(data);
+              this.scope_.messages = data.data.split(",");
             }));
 };
 

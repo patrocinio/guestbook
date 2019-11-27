@@ -19,23 +19,24 @@ if (isset($_GET['cmd']) === true) {
   ]);
 
   $value = $client->get($_GET['key']);
-  print('{"data": "' . $value . '"}');
 
   $host = 'redis-master';
   if (getenv('GET_HOSTS_FROM') == 'env') {
     $host = getenv('REDIS_MASTER_SERVICE_HOST');
   }
   header('Content-Type: application/json');
-  if ($_GET['cmd'] == 'set') {
+  if ($_GET['cmd'] == 'append') {
     $client = new Predis\Client([
       'scheme' => 'tcp',
       'host'   => $host,
       'port'   => 6379,
     ]);
 
-    $client->set($_GET['key'], $_GET['value']);
-    print('{"message": "Updated"}');
-  } 
+    $value .= ",".$_GET['value'];
+
+    $client->set($_GET['key'], $value);
+  }
+  print('{"data": "' . $value . '"}');
 } else {
   phpinfo();
 } ?>
