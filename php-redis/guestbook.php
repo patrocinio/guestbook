@@ -7,45 +7,74 @@ require 'Predis/Autoloader.php';
 
 Predis\Autoloader::register();
 
-function retrieveMessages () {
-  $host = 'redis-slave';
-  if (getenv('GET_HOSTS_FROM') == 'env') {
-    $host = getenv('REDIS_SLAVE_SERVICE_HOST');
-  }
-  $client = new Predis\Client([
-    'scheme' => 'tcp',
-    'host'   => $host,
-    'port'   => 6379,
-  ]);
-
-  $value = $client->get($_GET['key']);
-
-   return $value
-}
-
-function appendMessage () {
+function getRedisMaster () {
   $host = 'redis-master';
   if (getenv('GET_HOSTS_FROM') == 'env') {
     $host = getenv('REDIS_MASTER_SERVICE_HOST');
   }
 
+  return $host;
+}
+
+function getRedisSlave() {
+  $host = 'redis-slave';
+  if (getenv('GET_HOSTS_FROM') == 'env') {
+    $host = getenv('REDIS_SLAVE_SERVICE_HOST');
+  }
+
+  return $host;
+}
+
+function connectToRedis($host) {
   $client = new Predis\Client([
     'scheme' => 'tcp',
     'host'   => $host,
     'port'   => 6379,
   ]);
 
-  $value .= ",".$_GET['value'];
+  return $client;
+}
+
+function retrieveMessages () {
+  $host = getRedisSlave();
+  $client = connectToRedis($host);
+
+  $value = $client->get($_GET['key']);
+
+   return $value;
+}
+
+function appendMessage ($messages) {
+  $host = getRedisMaster();
+  $client = connectToRedis ($host);
+
+  $value = $messages . ",".$_GET['value'];
 
   $client->set($_GET['key'], $value);
+
+  return $value;
+}
+
+function clearMessages () {
+  $host = getRedisMaster();
+  $client = connectToRedis ($host);
+
+  $client->del($_GET['key']);
 }
 
 if (isset($_GET['cmd']) === true) {
-  $value = retrieveMessages;
+  $value = retrieveMessages();
 
   if ($_GET['cmd'] == 'append') {
-    appendMessage();
+    $value = appendMessage($value);
   }
+
+  if ($_GET['cmd'] == 'clear') {
+    clearMessages();
+    $values = "";
+  }
+
+
   header('Content-Type: application/json');
   print('{"data": "' . $value . '"}');
 } else {
