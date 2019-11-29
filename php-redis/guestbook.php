@@ -7,7 +7,7 @@ require 'Predis/Autoloader.php';
 
 Predis\Autoloader::register();
 
-if (isset($_GET['cmd']) === true) {
+function retrieveMessages () {
   $host = 'redis-slave';
   if (getenv('GET_HOSTS_FROM') == 'env') {
     $host = getenv('REDIS_SLAVE_SERVICE_HOST');
@@ -20,22 +20,33 @@ if (isset($_GET['cmd']) === true) {
 
   $value = $client->get($_GET['key']);
 
+   return $value
+}
+
+function appendMessage () {
   $host = 'redis-master';
   if (getenv('GET_HOSTS_FROM') == 'env') {
     $host = getenv('REDIS_MASTER_SERVICE_HOST');
   }
-  header('Content-Type: application/json');
+
+  $client = new Predis\Client([
+    'scheme' => 'tcp',
+    'host'   => $host,
+    'port'   => 6379,
+  ]);
+
+  $value .= ",".$_GET['value'];
+
+  $client->set($_GET['key'], $value);
+}
+
+if (isset($_GET['cmd']) === true) {
+  $value = retrieveMessages;
+
   if ($_GET['cmd'] == 'append') {
-    $client = new Predis\Client([
-      'scheme' => 'tcp',
-      'host'   => $host,
-      'port'   => 6379,
-    ]);
-
-    $value .= ",".$_GET['value'];
-
-    $client->set($_GET['key'], $value);
+    appendMessage();
   }
+  header('Content-Type: application/json');
   print('{"data": "' . $value . '"}');
 } else {
   phpinfo();
