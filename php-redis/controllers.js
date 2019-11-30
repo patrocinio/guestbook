@@ -5,11 +5,14 @@ const BACKEND = "http://backend-guestbook.patrocinio8-fa9ee67c9ab6a7791435450358
 function RedisController() {}
 
 RedisController.prototype.onRedis = function() {
-    this.http_.get("guestbook.php?cmd=append&key=messages&value=" + this.scope_.msg)
-            .success(angular.bind(this, function(data) {
-              console.log(data);
-              this.scope_.messages = data.data.split(",");
-            }));
+  scope = this.scope_;
+  this.http_.get (BACKEND + "/append/" + scope.msg)
+    .then(function(data) {
+      console.log(data);
+      scope.messages = data.data.split(",");
+    }, function(error) {
+      console.log (error);
+    })
 };
 
 redisApp.controller('RedisCtrl', function ($scope, $http, $location) {
