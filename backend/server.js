@@ -20,11 +20,15 @@ var port = process.env.PORT || 80;        // set our port
 // =============================================================================
 var router = express.Router();              // get an instance of the express Router
 
-/*
-router.get('/:stock', function(req, res) {
-	p.getPortfolio (req, res)
+
+router.get('/get', function(req, res) {
+	backend.getMessages (req, res);
 });
-*/
+
+router.get('/append/:message', function (req, res) {
+	backend.append (req, res);
+})
+
 
 router.get('/', function(req, res) {
 	res.send("I'm healthy")

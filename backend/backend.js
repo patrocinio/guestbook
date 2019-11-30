@@ -1,19 +1,44 @@
-var redisHelper = require('./redisHelper');
-var REDIS_URL = "redis://robinhood-redis";
+const redisHelper = require('./redisHelper');
+const SLAVE_URL = "redis://redis-slave";
+const MASTER_URL = "redis://redis-master";
+const MESSAGES_KEY = "messages";
 
-function getPortfolio (req, res) {
-	console.log ("Retrieving stock " + req.params.stock);
+const slave = redisHelper.connectToRedis(SLAVE_URL);
+const master = redisHelper.connectToRedis(MASTER_URL);
 
-	var client = redisHelper.connectToRedis(REDIS_URL);
+const {promisify} = require('util');
 
-	client.get(req.params.stock, function(err, reply) {
-	    // reply is null when the key is missing
-	    console.log("Result: " + reply);
-			res.send (reply)
-	});
+const getAsync = promisify(slave.get).bind(slave);
+const setAsync = promisify(master.set).bind(master);
 
+async function retrieveMessages () {
+	console.log ("Retrieving messages ");
+
+	const result = await getAsync(MESSAGES_KEY);
+
+	console.log("Result: " + result);
+	return result;
+}
+
+async function getMessages (req, res) {
+	const result = await retrieveMessages();
+	res.send(result)
+}
+
+async function append (req, res) {
+	console.log ("Appending messages " + req.params.message);
+
+	messages = await retrieveMessages();
+	messages += "," + req.params.message;
+
+	const result = await setAsync(MESSAGES_KEY, messages);
+
+	console.log("Result: " + result);
+
+	res.send(messages);
 }
 
 module.exports = {
-	getPortfolio: getPortfolio
+	getMessages,
+	append
 }
