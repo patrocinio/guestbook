@@ -10,6 +10,7 @@ const {promisify} = require('util');
 
 const getAsync = promisify(slave.get).bind(slave);
 const setAsync = promisify(master.set).bind(master);
+const delAsync = promisify(master.del).bind(master);
 
 async function retrieveMessages () {
 	console.log ("Retrieving messages ");
@@ -29,7 +30,11 @@ async function append (req, res) {
 	console.log ("Appending messages " + req.params.message);
 
 	messages = await retrieveMessages();
-	messages += "," + req.params.message;
+	if (messages == null) {
+		messages = req.params.message;
+	} else {
+		messages += "," + req.params.message;
+	}
 
 	const result = await setAsync(MESSAGES_KEY, messages);
 
@@ -38,7 +43,19 @@ async function append (req, res) {
 	res.send(messages);
 }
 
+async function clear (req, res) {
+	console.log ("Clearing messages ");
+
+	const result = await delAsync(MESSAGES_KEY);
+
+	console.log("Result: " + result);
+
+	res.send("");
+
+}
+
 module.exports = {
 	getMessages,
-	append
+	append,
+	clear
 }

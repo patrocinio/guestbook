@@ -29,6 +29,10 @@ router.get('/append/:message', function (req, res) {
 	backend.append (req, res);
 })
 
+router.get('/clear', function (req, res) {
+	backend.clear (req, res);
+})
+
 
 router.get('/', function(req, res) {
 	res.send("I'm healthy")
