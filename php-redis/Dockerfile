@@ -12,10 +12,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM php:5-apache
+FROM php:apache 
 
 RUN pear channel-discover pear.nrk.io
 RUN pear install nrk/Predis
+
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends git zip
+RUN curl --silent --show-error https://getcomposer.org/installer | php
+
+RUN docker-php-ext-install pcntl
+RUN apt-get install unzip
+RUN php composer.phar require texthtml/php-lock-redis
 
 # If the container's stdio is connected to systemd-journald,
 # /proc/self/fd/{1,2} are Unix sockets and apache will not be able to open()

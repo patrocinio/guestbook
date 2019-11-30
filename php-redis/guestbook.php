@@ -7,6 +7,8 @@ require 'Predis/Autoloader.php';
 
 Predis\Autoloader::register();
 
+use TH\RedisLock\RedisSimpleLockFactory;
+
 function getRedisMaster () {
   $host = 'redis-master';
   if (getenv('GET_HOSTS_FROM') == 'env') {
@@ -35,6 +37,11 @@ function connectToRedis($host) {
   return $client;
 }
 
+function getLock($client) {
+  $factory = new RedisSimpleLockFactory($client);
+  return $factory;
+}
+
 function retrieveMessages () {
   $host = getRedisSlave();
   $client = connectToRedis($host);
@@ -44,9 +51,8 @@ function retrieveMessages () {
    return $value;
 }
 
-function appendMessage ($messages) {
-  $host = getRedisMaster();
-  $client = connectToRedis ($host);
+function appendMessage ($master, $messages) {
+//  sleep(1);
 
   $value = $messages . ",".$_GET['value'];
 
@@ -63,6 +69,12 @@ function clearMessages () {
 }
 
 if (isset($_GET['cmd']) === true) {
+  $host = getRedisMaster();
+  $master = connectToRedis ($host);
+
+  $lock = getLock ($master);
+  $lock->acquire();
+
   $value = retrieveMessages();
 
   if ($_GET['cmd'] == 'append') {
@@ -74,6 +86,7 @@ if (isset($_GET['cmd']) === true) {
     $values = "";
   }
 
+  $lock->release();
 
   header('Content-Type: application/json');
   print('{"data": "' . $value . '"}');
