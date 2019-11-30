@@ -15,8 +15,8 @@ spec:
         tier: frontend
     spec:
       containers:
-      - name: php-redis
-        image: docker.io/patrocinio/gb-frontend-amd64:clear_messages
+      - name: frontend
+        image: docker.io/patrocinio/gb-frontend-amd64:backend
         imagePullPolicy: Always
         resources:
           requests:

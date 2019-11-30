@@ -21,11 +21,13 @@ async function retrieveMessages () {
 }
 
 function buildResponse (res, messages) {
+	/*
 	const result = {
 		data: messages
 	}
 	res.send(result);
-
+	*/
+	res.send(messages);
 }
 
 async function getMessages (req, res) {
