@@ -7,9 +7,9 @@ function RedisController() {}
 RedisController.prototype.onRedis = function() {
   scope = this.scope_;
   this.http_.get (BACKEND + "/append/" + scope.msg)
-    .then(function(data) {
-      console.log(data);
-      scope.messages = data.data.split(",");
+    .then(function(result) {
+      console.log("Append: ", result);
+      scope.messages = result.data.data.split(",");
     }, function(error) {
       console.log (error);
     })
@@ -22,9 +22,9 @@ redisApp.controller('RedisCtrl', function ($scope, $http, $location) {
         $scope.controller.http_ = $http;
 
         $http.get(BACKEND + "/get")
-            .then(function(data) {
-                console.log(data);
-                $scope.messages = data.data.split(",");
+            .then(function(result) {
+                console.log("Get: ", result);
+                $scope.messages = result.data.data.split(",");
             }, function(error) {
               console.log(error);
             });
