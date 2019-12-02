@@ -1,17 +1,16 @@
 const redisHelper = require('./redisHelper');
-const SLAVE_URL = process.env.SLAVE_URL || "redis://redis-slave";
+const SLAVE_URL = "redis://redis-slave";
+const MASTER_URL = "redis://redis-master";
 const MESSAGES_KEY = "messages";
 
 const slave = redisHelper.connectToRedis(SLAVE_URL);
+const master = redisHelper.connectToRedis(MASTER_URL);
 
 const {promisify} = require('util');
 
 const getAsync = promisify(slave.get).bind(slave);
-
-const queue = require ('./queue');
-const QUEUE_NAME = "messages";
-
-
+const setAsync = promisify(master.set).bind(master);
+const lock = promisify(require("redis-lock")(master));
 
 async function retrieveMessages () {
 	console.log ("Retrieving messages ");
@@ -36,18 +35,26 @@ async function getMessages (req, res) {
 	buildResponse (res, messages);
 }
 
-function enqueueMessage (res, message, ch, q) {
-	ch.sendToQueue(q, new Buffer(message));
-
-	res.send ("Message ", message, " enqueued")
-}
-
-
-
-function append (req, res) {
+async function append (req, res) {
 	console.log ("Appending messages " + req.params.message);
 
-	queue.createMQConnection(QUEUE_NAME, res, req.params.message, enqueueMessage)
+	const unlock = await lock(MESSAGES_KEY);
+
+	messages = await retrieveMessages();
+
+	if (messages == "") {
+		messages = req.params.message;
+	} else {
+		messages += "," + req.params.message;
+	}
+
+	const result = await setAsync(MESSAGES_KEY, messages);
+
+	unlock();
+
+	console.log("Result: " + result);
+
+	buildResponse (res, messages);
 }
 
 async function clear (req, res) {

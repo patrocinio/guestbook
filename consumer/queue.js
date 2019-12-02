@@ -1,0 +1,24 @@
+var amqp = require('amqplib/callback_api');
+const queueHost = process.env.QUEUE_HOST || "localhost"
+
+function createMQConnection(queue_name, res, callback) {
+    console.log ("Connecting to MQ at " + queueHost)
+    amqp.connect('amqp://' + queueHost, function(err, conn) {
+        if (err) {
+            console.log ("Error: " + err)
+        } else {
+            console.log ("Creating queue " + queue_name)
+            conn.createChannel(function(err, ch) {
+                ch.assertQueue(queue_name, {durable: false});
+
+                callback(res, ch, queue_name)
+            });
+        }
+    }); 
+
+}
+
+module.exports = {
+    createMQConnection: createMQConnection
+}
+

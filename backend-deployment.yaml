@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: php-redis
-        image: docker.io/patrocinio/gb-backend-amd64:backend
+        image: docker.io/patrocinio/gb-backend-amd64:messaging
         imagePullPolicy: Always
         resources:
           requests:
