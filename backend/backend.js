@@ -37,9 +37,9 @@ async function getMessages (req, res) {
 }
 
 function enqueueMessage (res, message, ch, q) {
-	ch.sendToQueue(q, new Buffer(message));
+	ch.sendToQueue(q, Buffer.from(message));
 
-	res.send ("Message ", message, " enqueued")
+	res.send ("Message " + message + " enqueued")
 }
 
 
