@@ -5,6 +5,7 @@
         "express": "*",
         "body-parser": "*",
         "request": "*",
-        "redis": "*"
+        "redis": "*",
+        "redis-lock": "*"
     }
 }

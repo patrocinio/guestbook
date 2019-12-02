@@ -10,6 +10,7 @@ const {promisify} = require('util');
 
 const getAsync = promisify(slave.get).bind(slave);
 const setAsync = promisify(master.set).bind(master);
+const lock = promisify(require("redis-lock")(master));
 
 async function retrieveMessages () {
 	console.log ("Retrieving messages ");
@@ -37,6 +38,8 @@ async function getMessages (req, res) {
 async function append (req, res) {
 	console.log ("Appending messages " + req.params.message);
 
+	const unlock = await lock(MESSAGES_KEY);
+
 	messages = await retrieveMessages();
 
 	if (messages == "") {
@@ -46,6 +49,8 @@ async function append (req, res) {
 	}
 
 	const result = await setAsync(MESSAGES_KEY, messages);
+
+	unlock();
 
 	console.log("Result: " + result);
 
