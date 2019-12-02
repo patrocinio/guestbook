@@ -38,6 +38,7 @@ async function append (req, res) {
 	console.log ("Appending messages " + req.params.message);
 
 	messages = await retrieveMessages();
+
 	if (messages == "") {
 		messages = req.params.message;
 	} else {
