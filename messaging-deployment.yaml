@@ -12,12 +12,12 @@ spec:
   template:
     metadata:
       labels:
-        app: redis
+        app: messaging
         role: master
         tier: messaging
     spec:
       containers:
-      - name: master
+      - name: queue
         image: rabbitmq
         resources:
           requests:
