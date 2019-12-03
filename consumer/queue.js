@@ -1,7 +1,7 @@
 var amqp = require('amqplib/callback_api');
 const queueHost = process.env.QUEUE_HOST || "localhost"
 
-function createMQConnection(queue_name, res, callback) {
+function createMQConnection(queue_name, callback) {
     console.log ("Connecting to MQ at " + queueHost)
     amqp.connect('amqp://' + queueHost, function(err, conn) {
         if (err) {
@@ -11,14 +11,13 @@ function createMQConnection(queue_name, res, callback) {
             conn.createChannel(function(err, ch) {
                 ch.assertQueue(queue_name, {durable: false});
 
-                callback(res, ch, queue_name)
+                callback(ch, queue_name)
             });
         }
-    }); 
+    });
 
 }
 
 module.exports = {
     createMQConnection: createMQConnection
 }
-

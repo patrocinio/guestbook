@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-TAG = backend
+TAG = messaging
 REGISTRY=docker.io/patrocinio
 #REGISTRY = gcr.io/google-samples
 ARCH ?= $(shell go env GOARCH)
@@ -20,7 +20,7 @@ ALL_ARCH = amd64 arm arm64 ppc64le s390x
 
 QEMUVERSION=v2.9.1
 
-IMAGE = $(REGISTRY)/gb-backend
+IMAGE = $(REGISTRY)/gb-messaging
 MULTI_ARCH_IMG = $(IMAGE)-$(ARCH)
 
 # Set default base image dynamically for each arch
