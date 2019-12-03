@@ -1,4 +1,4 @@
-var amqp = require('amqplib/callback_api');
+var amqp = require('amqplib');
 const queueHost = process.env.QUEUE_HOST || "messaging"
 
 function createMQConnection(queue_name, callback) {

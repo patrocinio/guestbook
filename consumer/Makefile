@@ -20,7 +20,7 @@ ALL_ARCH = amd64 arm arm64 ppc64le s390x
 
 QEMUVERSION=v2.9.1
 
-IMAGE = $(REGISTRY)/gb-messaging
+IMAGE = $(REGISTRY)/gb-consumer
 MULTI_ARCH_IMG = $(IMAGE)-$(ARCH)
 
 # Set default base image dynamically for each arch
