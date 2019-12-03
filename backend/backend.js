@@ -1,17 +1,18 @@
 const redisHelper = require('./redisHelper');
-const SLAVE_URL = process.env.SLAVE_URL || "redis://redis-slave";
+const MASTER_URL = "redis://redis-master";
+const SLAVE_URL = "redis://redis-slave";
 const MESSAGES_KEY = "messages";
 
 const slave = redisHelper.connectToRedis(SLAVE_URL);
+const master = redisHelper.connectToRedis(MASTER_URL);
 
 const {promisify} = require('util');
 
 const getAsync = promisify(slave.get).bind(slave);
+const setAsync = promisify(master.set).bind(master);
 
 const queue = require ('./queue');
 const QUEUE_NAME = "messages";
-
-
 
 async function retrieveMessages () {
 	console.log ("Retrieving messages ");
