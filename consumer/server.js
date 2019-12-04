@@ -20,20 +20,22 @@ async function retrieveMessages () {
 
 	const result = await getAsync(MESSAGES_KEY);
 
-	console.log("Result: " + result);
+	console.log("Retrieve messages result: " + result);
 	return result;
 }
 
 async function consume(message) {
     const unlock = await lock (MESSAGES_KEY);
 
-    messages = retrieveMessages();
+    let messages = await retrieveMessages();
+		console.log ("==> Messages: ", messages);
 
     if (messages == "") {
-      messages = messages;
+      messages = message;
     } else {
       messages += "," + message;
     }
+		console.log ("Setting messages to ", messages);
 
     const result = await setAsync(MESSAGES_KEY, messages);
 
