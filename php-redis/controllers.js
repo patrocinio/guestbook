@@ -34,6 +34,6 @@ redisApp.controller('RedisCtrl', function ($scope, $http, $location) {
         $scope.controller.location_ = $location;
         $scope.controller.http_ = $http;
 
-        setInterval(() => { retrieveMessages($scope) }, 1000);
+        setInterval(() => { retrieveMessages($scope) }, 5000);
 
 });
