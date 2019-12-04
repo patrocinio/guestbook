@@ -62,8 +62,26 @@ async function clear (req, res) {
 	buildResponse (res, "");
 }
 
+function queueSize (req, res) {
+	console.log ("Retrieving queue size...);
+
+	queue.createMQConnection(QUEUE_NAME, function (ch, q) {
+		ch.assetQueue (q, {durable: false}, function (err, ok) {
+			console.log(ok);
+		})
+	});
+
+	const result = {
+		msg: "Message"
+	};
+
+	res.send (result);
+
+}
+
 module.exports = {
 	getMessages,
 	append,
-	clear
+	clear,
+	queueSize
 }
