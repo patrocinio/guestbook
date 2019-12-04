@@ -3,14 +3,15 @@ function obtainPod() {
 	echo Found $PODS
 }
 
+oc project guestbook
 obtainPod $1
-for p in $PODS 
+for p in $PODS
 do
   echo Killing Pod $p
   kubectl delete pod $p
 done
 
-for p in $PODS 
+for p in $PODS
 do
   echo Waiting for Pod to die
   obtainPod $p
@@ -22,4 +23,3 @@ do
 
 
 done
- 

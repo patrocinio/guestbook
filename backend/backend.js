@@ -38,14 +38,18 @@ async function getMessages (req, res) {
 }
 
 function append (req, res) {
-	let message = req.params.message
-	console.log ("Appending messages " + message);
+	let message = req.params.message;
+	console.log ("Appending messages " + message);;
 
 	queue.createMQConnection(QUEUE_NAME, function (ch, q) {
 		ch.sendToQueue(q, Buffer.from(message));
+	});
 
-		res.send ("Message " + message + " enqueued")
-	})
+	const result = {
+		msg: "Message " + message + " enqueued"
+	};
+
+	res.send (result);
 }
 
 async function clear (req, res) {
