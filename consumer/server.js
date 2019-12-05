@@ -24,7 +24,8 @@ async function retrieveMessages () {
 	return result;
 }
 
-async function consume(message) {
+async function consume(channel, msg) {
+		const message = msg.content.toString();
     const unlock = await lock (MESSAGES_KEY);
 
     let messages = await retrieveMessages();
@@ -41,6 +42,8 @@ async function consume(message) {
 
     unlock();
 
+		channel.ack(msg);
+
     console.log ("Result: " + result);
 }
 
@@ -48,8 +51,8 @@ queue.createMQConnection(QUEUE_NAME, function (channel, queue) {
   console.log(" [*] Waiting for messages in %s. To exit press CTRL+C", queue);
   channel.consume(queue, function(msg) {
     console.log(" [x] Received %s", msg.content.toString());
-    consume (msg.content.toString());
+    consume (channel, msg);
   }, {
-      noAck: true
+      noAck: false
     });
 });

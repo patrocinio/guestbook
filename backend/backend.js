@@ -63,20 +63,19 @@ async function clear (req, res) {
 }
 
 function queueSize (req, res) {
-	console.log ("Retrieving queue size...);
+	console.log ("Retrieving queue size...");
 
 	queue.createMQConnection(QUEUE_NAME, function (ch, q) {
-		ch.assetQueue (q, {durable: false}, function (err, ok) {
-			console.log(ok);
-		})
+		ch.checkQueue (q, function (err, ok) {
+//		ch.assertQueue (q, {durable: false}, function (err, ok) {
+			console.log("checkQueue: ", ok);
+			const result = {
+				queueSize: ok.messageCount
+			}
+
+			res.send (result);
+		});
 	});
-
-	const result = {
-		msg: "Message"
-	};
-
-	res.send (result);
-
 }
 
 module.exports = {
