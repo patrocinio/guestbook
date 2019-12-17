@@ -66,8 +66,8 @@ function queueSize (req, res) {
 	console.log ("Retrieving queue size...");
 
 	queue.createMQConnection(QUEUE_NAME, function (ch, q) {
-		ch.checkQueue (q, function (err, ok) {
-//		ch.assertQueue (q, {durable: false}, function (err, ok) {
+//		ch.checkQueue (q, function (err, ok) {
+		ch.assertQueue (q, {durable: true}, function (err, ok) {
 			console.log("checkQueue: ", ok);
 			const result = {
 				queueSize: ok.messageCount

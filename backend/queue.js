@@ -9,7 +9,7 @@ function createMQConnection(queue_name, callback) {
         } else {
             console.log ("Creating queue " + queue_name)
             conn.createChannel(function(err, ch) {
-                ch.assertQueue(queue_name, {durable: false});
+                ch.assertQueue(queue_name, {durable: true});
 
                 callback(ch, queue_name)
             });
