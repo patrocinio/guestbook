@@ -1,6 +1,6 @@
 const redisHelper = require('./redisHelper');
-const MASTER_URL = "redis://redis-master";
-const SLAVE_URL = "redis://redis-slave";
+const MASTER_URL = process.env.MASTER_URL || "redis://redis-master";
+const SLAVE_URL = process.env.SLAVE_URL || "redis://redis-slave";
 const MESSAGES_KEY = "messages";
 
 const slave = redisHelper.connectToRedis(SLAVE_URL);
