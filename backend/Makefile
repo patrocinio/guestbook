@@ -59,7 +59,7 @@ all-push: $(addprefix sub-push-,$(ALL_ARCH))
 
 container: .container-$(ARCH)
 .container-$(ARCH):
-	cp ./* $(TEMP_DIR)
+	cp -r ./* $(TEMP_DIR)
 
 ifneq ($(ARCH),amd64)
 	cd $(TEMP_DIR) && sed -i "s|FROM php.*|FROM $(BASEIMAGE)\nCOPY qemu-$(QEMUARCH)-static /usr/bin\n|g" Dockerfile
