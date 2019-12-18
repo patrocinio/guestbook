@@ -4,6 +4,14 @@ const qMgr = "mymqv4";
 
 const cno = new mq.MQCNO();
 
+// Add authentication via the MQCSP structure
+var csp = new mq.MQCSP();
+csp.UserId = "mqm";
+csp.Password = "passw0rd";
+// Make the MQCNO refer to the MQCSP
+// This line allows use of the userid/password
+cno.SecurityParms = csp;
+
 cno.Options = mq.MQC.MQCNO_CLIENT_BINDING;
 
 const cd = new mq.MQCD();
