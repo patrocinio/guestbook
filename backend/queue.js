@@ -1,6 +1,6 @@
 var mq = require('ibmmq');
 
-const qMgr = "QM1";
+const qMgr = "mymqv4";
 
 const cno = new mq.MQCNO();
 
