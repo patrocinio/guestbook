@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: php-redis
-        image: docker.io/patrocinio/gb-backend-amd64:no_auto_ack
+        image: docker.io/patrocinio/gb-backend-amd64:ibm_mq
         imagePullPolicy: Always
         resources:
           requests:
