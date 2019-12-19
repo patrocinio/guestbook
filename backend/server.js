@@ -32,6 +32,10 @@ router.get('/get', function(req, res) {
 	backend.getMessages (req, res);
 });
 
+router.get('/getMaster', function(req, res) {
+	backend.getMasterMessages (req, res);
+});
+
 router.get('/append/:message', function (req, res) {
 	backend.append (req, res);
 })

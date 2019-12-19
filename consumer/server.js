@@ -7,6 +7,8 @@ const redisHelper = require('./redisHelper');
 const MASTER_URL = "redis://redis-master";
 const SLAVE_URL = "redis://redis-slave";
 
+const NUM_REPLICAS = 3;
+
 const master = redisHelper.connectToRedis(MASTER_URL);
 const slave = redisHelper.connectToRedis(SLAVE_URL);
 
@@ -14,6 +16,7 @@ const {promisify} = require('util');
 
 const setAsync = promisify(master.set).bind(master);
 const getAsync = promisify(slave.get).bind(slave);
+
 const lock = promisify(require("redis-lock") (master));
 
 async function retrieveMessages () {
@@ -28,7 +31,10 @@ async function retrieveMessages () {
 async function consume(channel, msg) {
 		const message = msg.content.toString();
 		console.log ("==> Adding message ", message);
+
     const unlock = await lock (MESSAGES_LOCK);
+		console.log ("==> Lock acquired for message ", message);
+
 
     let messages = await retrieveMessages();
 		console.log ("==> Messages: ", messages);
@@ -38,8 +44,8 @@ async function consume(channel, msg) {
     } else {
       messages += "," + message;
     }
-		console.log ("Setting messages to ", messages);
 
+		console.log ("Setting messages to ", messages);
     const result = await setAsync(MESSAGES_KEY, messages);
 
     unlock();

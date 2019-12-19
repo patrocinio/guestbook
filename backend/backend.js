@@ -9,6 +9,7 @@ const master = redisHelper.connectToRedis(MASTER_URL);
 const {promisify} = require('util');
 
 const getAsync = promisify(slave.get).bind(slave);
+const getMasterAsync = promisify(master.get).bind(master);
 const setAsync = promisify(master.set).bind(master);
 
 const queue = require ('./queue');
@@ -18,6 +19,15 @@ async function retrieveMessages () {
 	console.log ("Retrieving messages ");
 
 	const result = await getAsync(MESSAGES_KEY);
+
+	console.log("Result: " + result);
+	return result;
+}
+
+async function retrieveMasterMessages () {
+	console.log ("Retrieving master messages ");
+
+	const result = await getMasterAsync(MESSAGES_KEY);
 
 	console.log("Result: " + result);
 	return result;
@@ -34,6 +44,11 @@ function buildResponse (res, messages) {
 
 async function getMessages (req, res) {
 	const messages = await retrieveMessages();
+	buildResponse (res, messages);
+}
+
+async function getMasterMessages (req, res) {
+	const messages = await retrieveMasterMessages();
 	buildResponse (res, messages);
 }
 
@@ -83,5 +98,6 @@ module.exports = {
 	getMessages,
 	append,
 	clear,
-	emptyQueue
+	emptyQueue,
+	getMasterMessages
 }
