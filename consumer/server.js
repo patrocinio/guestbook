@@ -1,6 +1,7 @@
 const queue = require ('./queue');
 const QUEUE_NAME = "messages";
 const MESSAGES_KEY = "messages";
+const MESSAGES_LOCK = "messages-lock";
 
 const redisHelper = require('./redisHelper');
 const MASTER_URL = "redis://redis-master";
@@ -26,7 +27,8 @@ async function retrieveMessages () {
 
 async function consume(channel, msg) {
 		const message = msg.content.toString();
-    const unlock = await lock (MESSAGES_KEY);
+		console.log ("==> Adding message ", message);
+    const unlock = await lock (MESSAGES_LOCK);
 
     let messages = await retrieveMessages();
 		console.log ("==> Messages: ", messages);
@@ -43,8 +45,8 @@ async function consume(channel, msg) {
     unlock();
 
 		channel.ack(msg);
+		console.log ("==> Finished adding message ", message);
 
-    console.log ("Result: " + result);
 }
 
 queue.createMQConnection(QUEUE_NAME, function (channel, queue) {
