@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-TAG = no_auto_ack
+TAG = empty_queue
 REGISTRY=docker.io/patrocinio
 #REGISTRY = gcr.io/google-samples
 ARCH ?= $(shell go env GOARCH)

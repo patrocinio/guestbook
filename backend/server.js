@@ -40,8 +40,8 @@ router.get('/clear', function (req, res) {
 	backend.clear (req, res);
 })
 
-router.get('/queueSize', function (req, res) {
-  backend.queueSize (req, res);
+router.get('/emptyQueue', function (req, res) {
+  backend.emptyQueue (req, res);
 })
 
 router.get('/', function(req, res) {

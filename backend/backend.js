@@ -62,19 +62,20 @@ async function clear (req, res) {
 	buildResponse (res, "");
 }
 
-function queueSize (req, res) {
+function emptyQueue (req, res) {
 	console.log ("Retrieving queue size...");
 
-	queue.createMQConnection(QUEUE_NAME, function (ch, q) {
-//		ch.checkQueue (q, function (err, ok) {
-		ch.assertQueue (q, {durable: true}, function (err, ok) {
-			console.log("checkQueue: ", ok);
-			const result = {
-				queueSize: ok.messageCount
+	queue.createMQConnection(QUEUE_NAME, function (channel, queue) {
+		console.log(" [*] Getting messages in %s", queue);
+	  channel.get(queue, { noAck: false }, function(error, msg) {
+	    console.log(" [x] Received %s", msg);
+			if (msg == false) {
+				buildResponse (res, true);
+			} else {
+				channel.nack (msg);
+				buildResponse (res, false);
 			}
-
-			res.send (result);
-		});
+	  });
 	});
 }
 
@@ -82,5 +83,5 @@ module.exports = {
 	getMessages,
 	append,
 	clear,
-	queueSize
+	emptyQueue
 }
