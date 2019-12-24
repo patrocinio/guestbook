@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: php-redis
-        image: docker.io/patrocinio/gb-frontend-amd64:clear_messages
+        image: docker.io/patrocinio/gb-frontend-amd64:redis_lock
         imagePullPolicy: Always
         resources:
           requests:
