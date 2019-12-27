@@ -76,7 +76,7 @@ kubectl config set-context $(kubectl config current-context) --namespace guestbo
 #deployRedisSlaveService
 
 #deployFrontend
-#deployFrontendService
+deployFrontendService
 exposeGuestbook
 
 ROUTE=$(obtainRoute frontend)

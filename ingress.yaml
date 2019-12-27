@@ -4,10 +4,10 @@
    name: guestbook
  spec:
    rules:
-   - host: guestbook.patrocinio-iks-fa9ee67c9ab6a7791435450358e564cc-0000.us-east.containers.appdomain.cloud
+   - host: patrocinio-iks-fa9ee67c9ab6a7791435450358e564cc-0000.us-east.containers.appdomain.cloud
      http:
        paths:
-       - path: /
+       - path: /guestbook
          backend:
-           serviceName: guestbook
+           serviceName: frontend
            servicePort: 80
