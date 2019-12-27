@@ -1,4 +1,4 @@
-BASE_URL=https://raw.githubusercontent.com/patrocinio/guestbook/redis_lock/
+BASE_URL=.
 
 function createProject {
 #  oc new-project guestbook
