@@ -6,3 +6,7 @@ spec:
  repositories:
   - name: "k8s.gcr.io/*"
     policy:
+  - name: "gcr.io/google_samples/*"
+    policy:
+  - name: "docker.io/patrocinio/*"
+    policy: 
