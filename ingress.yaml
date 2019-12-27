@@ -4,7 +4,7 @@
    name: guestbook
  spec:
    rules:
-   - host: *
+   - host: "*"
      http:
        paths:
        - path: /guestbook
