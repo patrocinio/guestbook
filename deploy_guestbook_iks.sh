@@ -31,7 +31,7 @@ function deployFrontendService {
 }
 
 function exposeGuestbook {
-  kubectl delete -f $BASE_URK/ingress.yaml
+  kubectl delete -f $BASE_URL/ingress.yaml
   kubectl apply -f $BASE_URL/ingress.yaml
 }
 
