@@ -1,0 +1,13 @@
+ apiVersion: extensions/v1beta1
+ kind: Ingress
+ metadata:
+   name: guestbook
+ spec:
+   rules:
+   - host: *
+     http:
+       paths:
+       - path: /guestbook
+         backend:
+           serviceName: guestbook
+           servicePort: 80

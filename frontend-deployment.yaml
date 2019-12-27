@@ -14,16 +14,15 @@ spec:
         app: guestbook
         tier: frontend
     spec:
+      serviceAccountName: privileged
       containers:
       - name: php-redis
         image: docker.io/patrocinio/gb-frontend-amd64:redis_lock
-        imagePullPolicy: Always 
+        imagePullPolicy: Always
         resources:
           requests:
             cpu: 100m
             memory: 100Mi
-        securityContext:
-          runAsUser: 0
         env:
         - name: GET_HOSTS_FROM
           value: dns

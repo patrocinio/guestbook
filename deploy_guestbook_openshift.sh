@@ -64,8 +64,8 @@ function defineRoleBinding {
 }
 
 function addSCC {
-#  oc adm policy add-scc-to-user anyuid -z runasanyuid --as system:admin
-  oc adm policy add-scc-to-user privileged default
+  oc create sa privileged
+  oc adm policy add-scc-to-user privileged -z privileged
 }
 
 #createProject
