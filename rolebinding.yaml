@@ -1,0 +1,12 @@
+apiVersion: authorization.openshift.io/v1
+kind: RoleBinding
+metadata:
+  name: admin
+  namespace: guestbook
+roleRef:
+  name: admin
+subjects:
+- kind: User
+  name: IAM#eduardop@us.ibm.com
+userNames:
+- IAM#eduardop@us.ibm.com

@@ -59,26 +59,35 @@ function defineClusterImagePolicy {
   oc apply -f cluster-image-policy.yaml
 }
 
+function defineRoleBinding {
+  oc apply -f rolebinding.yaml
+}
+
+function addSCC {
+#  oc adm policy add-scc-to-user anyuid -z runasanyuid --as system:admin
+  oc adm policy add-scc-to-user privileged default
+}
 
 #createProject
 
-defineClusterImagePolicy
+#defineClusterImagePolicy
+addSCC
 
-oc project guestbook
-deployRedisMaster
-deployRedisMasterService
+#oc project guestbook
+#deployRedisMaster
+#deployRedisMasterService
 #exposeRedisMaster
 
-deployRedisSlave
-deployRedisSlaveService
+#deployRedisSlave
+#deployRedisSlaveService
 
 #deployBackend
 #deployBackendService
 #exposeBackend
 
 deployFrontend
-deployFrontendService
-exposeGuestbook
+#deployFrontendService
+#exposeGuestbook
 
 ROUTE=$(obtainRoute frontend)
 echo Frontend route: $ROUTE
