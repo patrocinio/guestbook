@@ -18,6 +18,12 @@ USER root
 RUN pecl install mongodb
 RUN echo "mongodb.so" > /usr/local/etc/php/conf.d/mongo.ini
 
+RUN apt-get update && apt-get install -y --no-install-recommends git zip
+RUN curl --silent --show-error https://getcomposer.org/installer | php
+RUN docker-php-ext-install pcntl
+RUN apt-get install unzip
+RUN php composer.phar require mongodb/mongodb
+
 ADD guestbook.php /var/www/html/guestbook.php
 ADD controllers.js /var/www/html/controllers.js
 ADD index.html /var/www/html/index.html
