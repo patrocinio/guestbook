@@ -15,16 +15,16 @@
 FROM php:apache
 USER root
 
-RUN pear channel-discover pear.nrk.io
-RUN pear install nrk/Predis
+#RUN pear channel-discover pear.nrk.io
+RUN pecl install mongodb
 
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends git zip
-RUN curl --silent --show-error https://getcomposer.org/installer | php
+#RUN apt-get update && \
+#    apt-get install -y --no-install-recommends git zip
+#RUN curl --silent --show-error https://getcomposer.org/installer | php
 
-RUN docker-php-ext-install pcntl
-RUN apt-get install unzip
-RUN php composer.phar require texthtml/php-lock-redis
+#RUN docker-php-ext-install pcntl
+#RUN apt-get install unzip
+#RUN php composer.phar require texthtml/php-lock-redis
 
 # If the container's stdio is connected to systemd-journald,
 # /proc/self/fd/{1,2} are Unix sockets and apache will not be able to open()

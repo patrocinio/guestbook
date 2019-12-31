@@ -50,15 +50,23 @@ function createPullSecret {
   oc create -f ~/patrocinio-secret.yml
 }
 
-function deployMongoDB {
-  oc create -f mongodb.yaml
+function deployMongoDBPVC {
+  oc create -f mongodb-pvc.yaml
 }
 
+function deployMongoDB {
+  oc delete -f mongodb-statefulset.yaml
+  oc create -f mongodb-statefulset.yaml
+}
+
+function exposeMongoDB {
+  oc create -f mongodb-service.yaml
+}
 
 
 #createProject
 
-defineClusterImagePolicy
+#defineClusterImagePolicy
 #addSCC
 
 oc project guestbook
@@ -66,9 +74,11 @@ oc project guestbook
 # createPullSecret
 # deployMongoOperator
 
-deployMongoDB
+#deployMongoDBPVC
+#deployMongoDB
+#exposeMongoDB
 
-#deployFrontend
+deployFrontend
 #deployFrontendService
 #exposeGuestbook
 

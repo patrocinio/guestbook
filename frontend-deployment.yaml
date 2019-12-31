@@ -17,7 +17,7 @@ spec:
       serviceAccountName: privileged
       containers:
       - name: php-redis
-        image: docker.io/patrocinio/gb-frontend-amd64:redis_lock
+        image: docker.io/patrocinio/gb-frontend-amd64:mongodb
         imagePullPolicy: Always
         resources:
           requests:

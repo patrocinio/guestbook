@@ -13,9 +13,16 @@ spec:
         app: mongodb
         selector: mongodb
     spec:
+      volumes:
+        - name: data
+          persistentvolumeclaim:
+            claimName: mongodb-pvc
       containers:
       - name: mongodb
         image: mongo:latest
+        volumeMounts:
+          - name: data
+            mountPath: /data/db
         env:
           - name: MONGO_INITDB_ROOT_USERNAME
             value: admin

@@ -1,40 +1,7 @@
 <?php
 
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
-require 'Predis/Autoloader.php';
-
-Predis\Autoloader::register();
-
-use TH\RedisLock\RedisSimpleLockFactory;
-
-function getRedisMaster () {
-  $host = 'redis-master';
-  if (getenv('GET_HOSTS_FROM') == 'env') {
-    $host = getenv('REDIS_MASTER_SERVICE_HOST');
-  }
-
-  return $host;
-}
-
-function getRedisSlave() {
-  $host = 'redis-slave';
-  if (getenv('GET_HOSTS_FROM') == 'env') {
-    $host = getenv('REDIS_SLAVE_SERVICE_HOST');
-  }
-
-  return $host;
-}
-
-function connectToRedis($host) {
-  $client = new Predis\Client([
-    'scheme' => 'tcp',
-    'host'   => $host,
-    'port'   => 6379,
-  ]);
-
-  return $client;
+function connectToMongo() {
+  $client = new MongoDB\Client('mongodb+srv://admin:password@mongodb/messages')
 }
 
 function getLock($client) {
@@ -62,15 +29,13 @@ function appendMessage ($master, $messages) {
 }
 
 function clearMessages () {
-  $host = getRedisMaster();
-  $client = connectToRedis ($host);
+  $client = connectToMongo ();
 
   $client->del($_GET['key']);
 }
 
 if (isset($_GET['cmd']) === true) {
-  $host = getRedisMaster();
-  $master = connectToRedis ($host);
+  $master = connectToMongo ();
 
   $lock = getLock ($master);
   $lock->acquire();
