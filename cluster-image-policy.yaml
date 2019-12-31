@@ -9,4 +9,6 @@ spec:
   - name: "gcr.io/google_samples/*"
     policy:
   - name: "docker.io/patrocinio/*"
-    policy: 
+    policy:
+  - name: "docker.io/mongo"
+    policy:

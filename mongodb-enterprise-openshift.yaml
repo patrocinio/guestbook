@@ -1,0 +1,216 @@
+---
+# Source: mongodb-enterprise-operator/templates/roles.yaml
+---
+kind:  Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: enterprise-operator
+
+  namespace: guestbook
+
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - configmaps
+  - secrets
+  - services
+  verbs:
+  - get
+  - list
+  - create
+  - update
+  - delete
+  - watch
+- apiGroups:
+  - apps
+  resources:
+  - statefulsets
+  verbs:
+  - create
+  - get
+  - list
+  - watch
+  - delete
+  - update
+- apiGroups:
+  - mongodb.com
+  resources:
+  - mongodb
+  - mongodb/finalizers
+  - mongodbusers
+  - opsmanagers
+  - opsmanagers/finalizers
+  verbs:
+  - get
+  - list
+  - watch
+  - delete
+  - update
+
+---
+kind:  RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: enterprise-operator
+
+  namespace: guestbook
+
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind:  Role
+  name: enterprise-operator
+subjects:
+- kind: ServiceAccount
+  name: enterprise-operator
+
+  namespace: guestbook
+
+
+# This ClusterRole is needed if the user wants to use the Kubernetes CA
+# infrastructure to generate certificates.
+
+---
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: enterprise-operator-mongodb-certs
+rules:
+- apiGroups:
+  - certificates.k8s.io
+  resources:
+  - certificatesigningrequests
+  verbs:
+  - get
+  - create
+  - list
+  - watch
+
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: enterprise-operator-mongodb-certs-binding
+  namespace: guestbook
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: enterprise-operator-mongodb-certs
+subjects:
+- kind: ServiceAccount
+  name: enterprise-operator
+  namespace: guestbook
+
+
+
+---
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: mongodb-enterprise-appdb
+
+  namespace: guestbook
+
+rules:
+  - apiGroups:
+      - ""
+    resources:
+      - configmaps
+    verbs:
+      - get
+
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: mongodb-enterprise-appdb
+
+  namespace: guestbook
+
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: mongodb-enterprise-appdb
+subjects:
+  - kind: ServiceAccount
+    name: mongodb-enterprise-appdb
+
+    namespace: guestbook
+
+
+---
+# Source: mongodb-enterprise-operator/templates/serviceaccount.yaml
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: enterprise-operator
+
+  namespace: guestbook
+
+
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: mongodb-enterprise-appdb
+
+  namespace: guestbook
+
+---
+# Source: mongodb-enterprise-operator/templates/operator.yaml
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongodb-enterprise-operator
+
+  namespace: guestbook
+
+spec:
+  replicas: 1
+  selector:
+      matchLabels:
+        app: enterprise-operator
+  template:
+    metadata:
+      labels:
+        app: enterprise-operator
+    spec:
+      imagePullSecrets:
+        - name: 11559946-patrocinio-pull-secret
+      serviceAccountName: enterprise-operator
+
+
+
+      containers:
+      - name: enterprise-operator
+        image: registry.connect.redhat.com/mongodb/enterprise-operator:1.4.1
+        imagePullPolicy: Always
+        env:
+        - name: OPERATOR_ENV
+          value: prod
+        - name: WATCH_NAMESPACE
+
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+
+        - name: CURRENT_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+
+        - name: MANAGED_SECURITY_CONTEXT
+          value: 'true'
+
+        - name: MONGODB_ENTERPRISE_DATABASE_IMAGE
+          value: registry.connect.redhat.com/mongodb/enterprise-database:1.4.1
+        - name: IMAGE_PULL_POLICY
+          value: Always
+        - name: OPS_MANAGER_IMAGE_REPOSITORY
+          value: registry.connect.redhat.com/mongodb/mongodb-enterprise-ops-manager
+        - name: OPS_MANAGER_IMAGE_PULL_POLICY
+          value: Always
+        - name: APP_DB_IMAGE_REPOSITORY
+          value: registry.connect.redhat.com/mongodb/mongodb-enterprise-appdb

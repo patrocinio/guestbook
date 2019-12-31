@@ -4,22 +4,6 @@ function createProject {
   oc new-project guestbook
 }
 
-function deployRedisMaster {
-  oc apply -f $BASE_URL/redis-master-deployment.yaml
-}
-
-function deployRedisMasterService {
-  oc apply -f $BASE_URL/redis-master-service.yaml
-}
-
-function deployRedisSlave {
-  oc apply -f $BASE_URL/redis-slave-deployment.yaml
-}
-
-function deployRedisSlaveService {
-  oc apply -f $BASE_URL/redis-slave-service.yaml
-}
-
 function deployFrontend {
   oc apply -f $BASE_URL/frontend-deployment.yaml
 }
@@ -29,26 +13,12 @@ function deployFrontendService {
   oc apply -f $BASE_URL/frontend-service.yaml
 }
 
-function deployBackend {
-  oc apply -f $BASE_URL/backend-deployment.yaml
-}
-
-# Deprecated
-function deployBackendService {
-  oc apply -f $BASE_URL/backend-service.yaml
-}
-
 function exposeGuestbook {
   oc expose svc frontend
 }
 
 function exposeBackend {
   oc expose svc backend
-}
-
-function exposeRedisMaster {
-  oc delete route redis-master
-  oc expose svc redis-master --port 6379
 }
 
 function obtainRoute {
@@ -68,24 +38,37 @@ function addSCC {
   oc adm policy add-scc-to-user privileged -z privileged
 }
 
+function deployMongoOperator {
+  oc delete -f mongodb-enterprise-openshift.yaml
+  oc apply -f mongodb-enterprise-openshift.yaml
+}
+
+function createPullSecret {
+#  cat ~/dockerconfig | base64 > .dockerconfigjson
+#  oc delete secret openshift-pull-secrets
+#  oc create secret generic openshift-pull-secrets --from-file=.dockerconfigjson
+  oc create -f ~/patrocinio-secret.yml
+}
+
+function deployMongoDB {
+  oc create -f mongodb.yaml
+}
+
+
+
 #createProject
 
-#defineClusterImagePolicy
-addSCC
+defineClusterImagePolicy
+#addSCC
 
-#oc project guestbook
-#deployRedisMaster
-#deployRedisMasterService
-#exposeRedisMaster
+oc project guestbook
 
-#deployRedisSlave
-#deployRedisSlaveService
+# createPullSecret
+# deployMongoOperator
 
-#deployBackend
-#deployBackendService
-#exposeBackend
+deployMongoDB
 
-deployFrontend
+#deployFrontend
 #deployFrontendService
 #exposeGuestbook
 
