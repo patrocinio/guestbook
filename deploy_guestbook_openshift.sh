@@ -67,7 +67,7 @@ function exposeMongoDB {
 #createProject
 
 #defineClusterImagePolicy
-addSCC
+#addSCC
 
 oc project guestbook
 
@@ -78,7 +78,7 @@ oc project guestbook
 #deployMongoDB
 #exposeMongoDB
 
-deployFrontend
+#deployFrontend
 #deployFrontendService
 #exposeGuestbook
 

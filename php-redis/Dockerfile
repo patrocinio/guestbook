@@ -16,6 +16,7 @@ FROM php:apache
 USER root
 
 RUN pecl install mongodb
+RUN echo "mongodb.so" > /usr/local/etc/php/conf.d/mongo.ini
 
 ADD guestbook.php /var/www/html/guestbook.php
 ADD controllers.js /var/www/html/controllers.js

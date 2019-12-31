@@ -1,7 +1,14 @@
 <?php
 
+function logMessage($message) {
+  $out = fopen('php://output', 'w');
+  fputs($out, $message);
+  fclose($out);
+}
+
 function connectToMongo() {
-  $client = new MongoDB\Client('mongodb+srv://admin:password@mongodb/messages')
+  logMessage("Connecting to MongoDB...");
+  $client = new MongoDB\Client('mongodb+srv://admin:password@mongodb/messages');
 }
 
 function getLock($client) {
