@@ -1,16 +1,15 @@
-BASE_URL=https://raw.githubusercontent.com/patrocinio/guestbook/redis_lock/
-
 function createProject {
   oc new-project guestbook
 }
 
 function deployFrontend {
-  oc apply -f $BASE_URL/frontend-deployment.yaml
+  oc delete -f frontend-deployment.yaml
+  oc apply -f frontend-deployment.yaml
 }
 
 # Deprecated
 function deployFrontendService {
-  oc apply -f $BASE_URL/frontend-service.yaml
+  oc apply -f frontend-service.yaml
 }
 
 function exposeGuestbook {
@@ -36,6 +35,7 @@ function defineRoleBinding {
 function addSCC {
   oc create sa privileged
   oc adm policy add-scc-to-user privileged -z privileged
+  oc adm policy add-scc-to-user anyuid -z privileged
 }
 
 function deployMongoOperator {
@@ -67,7 +67,7 @@ function exposeMongoDB {
 #createProject
 
 #defineClusterImagePolicy
-#addSCC
+addSCC
 
 oc project guestbook
 
