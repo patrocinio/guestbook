@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-TAG = empty_queue
+TAG = sync_redis
 REGISTRY=docker.io/patrocinio
 #REGISTRY = gcr.io/google-samples
 ARCH ?= $(shell go env GOARCH)

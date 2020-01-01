@@ -21,7 +21,7 @@ app.use(function(req, res, next) {
   next();
 });
 
-var port = process.env.PORT || 80;        // set our port
+var port = process.env.PORT || 8080;        // set our port
 
 // ROUTES FOR OUR API
 // =============================================================================

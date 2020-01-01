@@ -16,9 +16,16 @@ spec:
         role: master
         tier: backend
     spec:
+      volumes:
+        - name: data
+          persistentvolumeclaim:
+            claimName: redis-master-pvc
       containers:
       - name: master
         image: k8s.gcr.io/redis:e2e  # or just image: redis
+        volumeMounts:
+          - name: data
+            mountPath: /data
         resources:
           requests:
             cpu: 100m

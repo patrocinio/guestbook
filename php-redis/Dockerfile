@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM nginx:latest
+FROM nginxinc/nginx-unprivileged
 
 ADD controllers.js /usr/share/nginx/html/controllers.js
 ADD index.html /usr/share/nginx/html/index.html

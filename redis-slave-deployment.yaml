@@ -16,9 +16,17 @@ spec:
         role: slave
         tier: backend
     spec:
+      volumes:
+        - name: data
+          persistentvolumeclaim:
+            claimName: redis-master-pvc
+
       containers:
       - name: slave
         image: gcr.io/google_samples/gb-redisslave:v1
+        volumeMounts:
+          - name: data
+            mountPath: /data
         resources:
           requests:
             cpu: 100m
