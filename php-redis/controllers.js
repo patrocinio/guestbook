@@ -1,6 +1,6 @@
 var redisApp = angular.module('redis', ['ui.bootstrap']);
 
-const BACKEND = "http://backend-guestbook.patrocinio8-fa9ee67c9ab6a7791435450358e564cc-0001.us-east.containers.appdomain.cloud"
+const BACKEND = "http://backend.patrocinio-iks-fa9ee67c9ab6a7791435450358e564cc-0000.us-east.containers.appdomain.cloud"
 
 function RedisController() {
   console.log ("Constructor");
@@ -17,6 +17,7 @@ RedisController.prototype.onRedis = function() {
 
 function retrieveMessages($scope) {
   console.log ("Retrieving messages...");
+  console.log ("Backend: ", BACKEND);
   $scope.controller.http_.get(BACKEND + "/get")
       .then(function(result) {
           console.log("Get: ", result);

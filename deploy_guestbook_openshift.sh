@@ -45,7 +45,6 @@ function deployBackend {
   oc apply -f $BASE_URL/backend-deployment.yaml
 }
 
-# Deprecated
 function deployBackendService {
   oc delete -f $BASE_URL/backend-service.yaml
   oc apply -f $BASE_URL/backend-service.yaml

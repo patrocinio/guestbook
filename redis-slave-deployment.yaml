@@ -19,7 +19,7 @@ spec:
       volumes:
         - name: data
           persistentVolumeClaim:
-            claimName: redis-master-pvc
+            claimName: redis-slave-pvc
 
       containers:
       - name: slave
