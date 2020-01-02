@@ -31,8 +31,8 @@ function deployRedisSlaveService {
 }
 
 function deployFrontend {
-  oc delete -f $BASE_URL/frontend-deployment.yaml
-  oc apply -f $BASE_URL/frontend-deployment.yaml
+  oc delete -f $BASE_URL/frontend-deployment-openshift.yaml
+  oc apply -f $BASE_URL/frontend-deployment-openshift.yaml
 }
 
 function deployFrontendService {
@@ -103,7 +103,7 @@ oc project guestbook
 #deployBackendService
 #exposeBackend
 
-#deployFrontend
+deployFrontend
 #deployFrontendService
 #exposeGuestbook
 
