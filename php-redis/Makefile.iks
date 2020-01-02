@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-TAG = openshift
+TAG = iks
 REGISTRY=docker.io/patrocinio
 #REGISTRY = gcr.io/google-samples
 ARCH ?= $(shell go env GOARCH)
