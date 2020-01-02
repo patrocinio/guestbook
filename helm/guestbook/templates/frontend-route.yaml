@@ -1,3 +1,5 @@
+ {{- if eq .Values.service.type "Route" }}
+
 apiVersion: route.openshift.io/v1
 kind: Route
 metadata:
@@ -12,3 +14,5 @@ spec:
   to:
     kind: Service
     name: frontend
+
+{{- end }}
