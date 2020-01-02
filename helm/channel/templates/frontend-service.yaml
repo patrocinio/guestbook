@@ -1,0 +1,29 @@
+apiVersion: app.ibm.com/v1alpha1
+kind: Deployable
+metadata:
+  name: frontend-service
+  annotations:
+    app.ibm.com/is-local-deployable: "false"
+  labels:
+    app: guestbook
+    tier: frontend
+spec:
+  template:
+    apiVersion: v1
+    kind: Service
+    metadata:
+      name: frontend
+      labels:
+        app: guestbook
+        tier: frontend
+    spec:
+      # comment or delete the following line if you want to use a LoadBalancer
+      type: ClusterIP
+      # if your cluster supports it, uncomment the following to automatically create
+      # an external load-balanced IP for the frontend service.
+      # type: LoadBalancer
+      ports:
+      - port: 8080
+      selector:
+        app: guestbook
+        tier: frontend

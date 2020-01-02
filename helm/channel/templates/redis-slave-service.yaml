@@ -1,0 +1,27 @@
+apiVersion: app.ibm.com/v1alpha1
+kind: Deployable
+metadata:
+  name: redis-slave-service
+  annotations:
+    app.ibm.com/is-local-deployable: "false"
+  labels:
+    app: redis
+    tier: backend
+spec:
+  template:
+
+    apiVersion: v1
+    kind: Service
+    metadata:
+      name: redis-slave
+      labels:
+        app: redis
+        role: slave
+        tier: backend
+    spec:
+      ports:
+      - port: 6379
+      selector:
+        app: redis
+        role: slave
+        tier: backend

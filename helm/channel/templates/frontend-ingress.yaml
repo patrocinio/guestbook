@@ -1,0 +1,30 @@
+ {{- if .Values.ingress.enabled }}
+
+apiVersion: app.ibm.com/v1alpha1
+kind: Deployable
+metadata:
+  name: backend-deployment
+  annotations:
+    app.ibm.com/is-local-deployable: "false"
+  labels:
+    app: guestbook
+    tier: backend
+spec:
+  template:
+    apiVersion: extensions/v1beta1
+     kind: Ingress
+     metadata:
+       name: guestbook
+       annotations:
+         nginx.ingress.kubernetes.io/rewrite-target: /
+     spec:
+       rules:
+       - host: guestbook.patrocinio-iks-fa9ee67c9ab6a7791435450358e564cc-0000.us-east.containers.appdomain.cloud
+         http:
+           paths:
+           - path: /
+             backend:
+               serviceName: frontend
+               servicePort: 8080
+
+{{- end}}
