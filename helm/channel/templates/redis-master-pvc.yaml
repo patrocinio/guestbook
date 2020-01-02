@@ -1,3 +1,4 @@
+
 apiVersion: app.ibm.com/v1alpha1
 kind: Deployable
 metadata:
@@ -9,26 +10,14 @@ metadata:
     tier: backend
 spec:
   template:
-
-    apiVersion: app.ibm.com/v1alpha1
-    kind: Deployable
+    kind: PersistentVolumeClaim
+    apiVersion: v1
     metadata:
       name: redis-master-pvc
-      annotations:
-        app.ibm.com/is-local-deployable: "false"
-      labels:
-        app: redis
-        tier: backend
     spec:
-      template:
-        kind: PersistentVolumeClaim
-        apiVersion: v1
-        metadata:
-          name: redis-master-pvc
-        spec:
-          accessModes:
-            - ReadWriteOnce
-          volumeMode: Filesystem
-          resources:
-            requests:
-              storage: 1Gi
+      accessModes:
+        - ReadWriteOnce
+      volumeMode: Filesystem
+      resources:
+        requests:
+          storage: 1Gi

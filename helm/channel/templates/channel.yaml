@@ -1,0 +1,11 @@
+apiVersion: app.ibm.com/v1alpha1
+kind: Channel
+metadata:
+  name: channel
+  labels:
+    app: guestbook
+spec:
+  type: Namespace
+  pathname: guestbook
+  sourceNamespaces:
+    - guestbook
