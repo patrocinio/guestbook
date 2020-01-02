@@ -32,7 +32,8 @@ function deployRedisSlaveService {
 }
 
 function deployFrontend {
-  kubectl apply -f $BASE_URL/frontend-deployment.yaml
+  kubectl delete -f $BASE_URL/frontend-deployment-iks.yaml
+  kubectl apply -f $BASE_URL/frontend-deployment-iks.yaml
 }
 
 # Deprecated
@@ -112,7 +113,7 @@ kubectl config set-context $(kubectl config current-context) --namespace guestbo
 #deployBackendService
 #exposeBackend
 
-#deployFrontend
+deployFrontend
 #deployFrontendService
 #exposeGuestbook
 
