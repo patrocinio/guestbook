@@ -81,6 +81,18 @@ function addSCC {
   kubectl create sa privileged
 }
 
+function deployMessaging {
+  kubectl apply -f messaging-deployment.yaml
+}
+
+function deployMessagingService {
+  kubectl apply -f messaging-service.yaml
+}
+
+function deployConsumer {
+  kubectl apply -f consumer-deployment.yaml
+}
+
 #createProject
 
 #defineClusterImagePolicy
@@ -88,11 +100,11 @@ function addSCC {
 
 kubectl config set-context $(kubectl config current-context) --namespace guestbook
 
-deployRedisMasterStorage
+#deployRedisMasterStorage
 #deployRedisMaster
 #deployRedisMasterService
 
-deployRedisSlaveStorage
+#deployRedisSlaveStorage
 #deployRedisSlave
 #deployRedisSlaveService
 
@@ -103,6 +115,11 @@ deployRedisSlaveStorage
 #deployFrontend
 #deployFrontendService
 #exposeGuestbook
+
+#deployMessaging
+#deployMessagingService
+
+deployConsumer
 
 ROUTE=$(obtainRoute guestbook)
 echo Frontend route: $ROUTE
