@@ -1,0 +1,5 @@
+apiVersion: app.ibm.com/v1alpha1
+kind: PlacementRule
+metadata:
+  name: placementrule
+  namespace: guestbook

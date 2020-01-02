@@ -1,0 +1,14 @@
+apiVersion: app.ibm.com/v1alpha1
+kind: Subscription
+metadata:
+  name: guestbook
+  namespace: guestbook
+spec:
+  channel: channel
+  placement:
+    clusters:
+    - name: patrocinio-iks
+    - name: patrocinio9
+    placementRef:
+      kind: PlacementRule
+      name: placementrule
