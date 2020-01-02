@@ -85,7 +85,7 @@ function addSCC {
 
 #createProject
 
-#defineClusterImagePolicy
+defineClusterImagePolicy
 #addSCC
 
 oc project guestbook
@@ -104,8 +104,8 @@ oc project guestbook
 #exposeBackend
 
 #deployFrontend
-deployFrontendService
-exposeGuestbook
+#deployFrontendService
+#exposeGuestbook
 
 ROUTE=$(obtainRoute frontend)
 echo Frontend route: $ROUTE

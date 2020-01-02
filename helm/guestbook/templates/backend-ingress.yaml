@@ -1,0 +1,19 @@
+ {{- if .Values.ingress.enabled }}
+
+aapiVersion: extensions/v1beta1
+ kind: Ingress
+ metadata:
+   name: backend
+   annotations:
+     nginx.ingress.kubernetes.io/rewrite-target: /
+ spec:
+   rules:
+   - host: backend.patrocinio-iks-fa9ee67c9ab6a7791435450358e564cc-0000.us-east.containers.appdomain.cloud
+     http:
+       paths:
+       - path: /
+         backend:
+           serviceName: backend
+           servicePort: 8080
+
+{{- end }}

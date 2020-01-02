@@ -1,0 +1,26 @@
+apiVersion: apps/v1 #  for k8s versions before 1.9.0 use apps/v1beta2  and before 1.8.0 use extensions/v1beta1
+kind: Deployment
+metadata:
+  name: consumer
+spec:
+  selector:
+    matchLabels:
+      app: consumer
+      tier: backend
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: consumer
+        tier: backend
+    spec:
+      containers:
+      - name: php-redis
+        image: docker.io/patrocinio/gb-consumer-amd64:sync_redis
+        imagePullPolicy: Always
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+        ports:
+        - containerPort: 80

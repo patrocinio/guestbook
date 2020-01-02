@@ -21,8 +21,6 @@ function deployRedisSlaveStorage {
   kubectl apply -f redis-slave-pvc.yaml
 }
 
-
-
 function deployRedisSlave {
   kubectl apply -f $BASE_URL/redis-slave-deployment.yaml
 }
@@ -83,16 +81,16 @@ function addSCC {
 
 #createProject
 
-#defineClusterImagePolicy
+defineClusterImagePolicy
 #addSCC
 
 kubectl config set-context $(kubectl config current-context) --namespace guestbook
 
-deployRedisMasterStorage
+#deployRedisMasterStorage
 #deployRedisMaster
 #deployRedisMasterService
 
-deployRedisSlaveStorage
+#deployRedisSlaveStorage
 #deployRedisSlave
 #deployRedisSlaveService
 

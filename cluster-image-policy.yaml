@@ -1,0 +1,14 @@
+apiVersion: securityenforcement.admission.cloud.ibm.com/v1beta1
+kind: ClusterImagePolicy
+metadata:
+  name: guestbook-image-policy
+spec:
+ repositories:
+  - name: "k8s.gcr.io/*"
+    policy:
+  - name: "gcr.io/google_samples/*"
+    policy:
+  - name: "docker.io/patrocinio/*"
+    policy:
+  - name: "docker.io/rabbitmq"
+    policy:
