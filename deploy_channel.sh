@@ -1,5 +1,5 @@
 cd helm
-oc new-project guestbook-channel
+oc project guestbook
 helm package channel
 helm delete --purge channel --tls
-helm install channel -n channel --namespace guestbook --tls -f guestbook/values-openshift.yaml
+helm install channel -n channel --tls -f guestbook/values-iks.yaml
