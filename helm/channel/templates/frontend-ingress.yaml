@@ -1,9 +1,7 @@
- {{- if .Values.ingress.enabled }}
-
 apiVersion: app.ibm.com/v1alpha1
 kind: Deployable
 metadata:
-  name: backend-deployment
+  name: frontend-ingress
   annotations:
     app.ibm.com/is-local-deployable: "false"
   labels:
@@ -11,7 +9,7 @@ metadata:
     tier: backend
 spec:
   template:
-    apiVersion: extensions/v1beta1
+     apiVersion: extensions/v1beta1
      kind: Ingress
      metadata:
        name: guestbook
@@ -26,5 +24,3 @@ spec:
              backend:
                serviceName: frontend
                servicePort: 8080
-
-{{- end}}
