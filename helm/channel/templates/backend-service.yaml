@@ -3,7 +3,7 @@ kind: Deployable
 metadata:
   name: backend-service
   annotations:
-    app.ibm.com/is-local-deployable: "false"
+#    app.ibm.com/is-local-deployable: "false"
   labels:
     app: guestbook
     tier: backend

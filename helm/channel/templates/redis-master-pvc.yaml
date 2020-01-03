@@ -4,7 +4,7 @@ kind: Deployable
 metadata:
   name: redis-master-pvc
   annotations:
-    app.ibm.com/is-local-deployable: "false"
+#    app.ibm.com/is-local-deployable: "false"
   labels:
     app: redis
     tier: backend

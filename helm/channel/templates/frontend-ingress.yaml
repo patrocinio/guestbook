@@ -3,7 +3,7 @@ kind: Deployable
 metadata:
   name: frontend-ingress
   annotations:
-    app.ibm.com/is-local-deployable: "false"
+#    app.ibm.com/is-local-deployable: "false"
   labels:
     app: guestbook
     tier: backend
@@ -17,10 +17,9 @@ spec:
          nginx.ingress.kubernetes.io/rewrite-target: /
      spec:
        rules:
-       - host: guestbook.patrocinio-iks-fa9ee67c9ab6a7791435450358e564cc-0000.us-east.containers.appdomain.cloud
-         http:
+       - http:
            paths:
-           - path: /
+           - path: /guestbook
              backend:
                serviceName: frontend
                servicePort: 8080
