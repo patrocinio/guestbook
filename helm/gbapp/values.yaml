@@ -8,13 +8,12 @@ placement:
     main:
       labelSelector:
         matchLabels:
-          environment: Dev
+          cloud: IBM
     redismaster:
       labelSelector:
         matchLabels:
-          environment: Dev
+          cloud: IBM
 
 channel:
   name: gbchn
   namespace: gbchn
-

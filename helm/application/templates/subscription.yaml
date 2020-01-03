@@ -5,8 +5,10 @@ metadata:
   labels:
     app: guestbook
 spec:
-  channel: guestbook-channel/channel
+  channel: guestbook/channel
+#  channel: guestbook-mcm/my-channel
   placement:
-    clusters:
-    - name: patrocinio-iks
-    - name: patrocinio9
+      placementRef:
+        group: app.ibm.com
+        kind: PlacementRule
+        name: guestbook-pr
