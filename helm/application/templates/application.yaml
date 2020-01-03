@@ -9,5 +9,8 @@ spec:
   - group: app.ibm.com
     kind: Subscription
   selector:
-    matchLabels:
-      name: guestbook
+    matchExpressions:
+    - key: app
+      operator: In
+      values:
+      - guestbook
