@@ -8,5 +8,5 @@ service:
 ingress:
   enabled: false
 
-frontend:
-  image_tag: openshift
+#frontend:
+#  image_tag: openshift

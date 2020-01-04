@@ -85,7 +85,7 @@ function addSCC {
 
 #createProject
 
-defineClusterImagePolicy
+#defineClusterImagePolicy
 #addSCC
 
 oc project guestbook
@@ -103,7 +103,7 @@ oc project guestbook
 #deployBackendService
 #exposeBackend
 
-#deployFrontend
+deployFrontend
 #deployFrontendService
 #exposeGuestbook
 

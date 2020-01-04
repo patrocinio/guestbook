@@ -13,6 +13,8 @@
 # limitations under the License.
 
 FROM nginxinc/nginx-unprivileged
+USER root
 
 ADD controllers.js /usr/share/nginx/html/controllers.js
 ADD index.html /usr/share/nginx/html/index.html
+RUN chmod 777 /usr/share/nginx/html/controllers.js /usr/share/nginx/html/ /var/cache/nginx

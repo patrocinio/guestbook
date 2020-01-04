@@ -16,12 +16,16 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: docker.io/patrocinio/gb-frontend-amd64:{{.Values.frontend.image_tag}}
+        image: docker.io/patrocinio/gb-frontend-amd64:multicloud
         imagePullPolicy: Always
         resources:
           requests:
             cpu: 100m
             memory: 100Mi
+        command: ["/bin/sh"]
+        args:
+        - "-c"
+        - "sed 's/XXBACKENDXX/backend-guestbook.patrocinio9-fa9ee67c9ab6a7791435450358e564cc-0001.us-east.containers.appdomain.cloud/g' /usr/share/nginx/html/controllers.js > /tmp/controllers.js; mv /tmp/controllers.js /usr/share/nginx/html/controllers.js; nginx -g 'daemon off;'"
         env:
         - name: GET_HOSTS_FROM
           value: dns
