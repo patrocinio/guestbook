@@ -17,9 +17,10 @@ spec:
          nginx.ingress.kubernetes.io/rewrite-target: /
      spec:
        rules:
-       - http:
+       - host: guestbook.patrocinio-iks-fa9ee67c9ab6a7791435450358e564cc-0000.us-east.containers.appdomain.cloud
+         http:
            paths:
-           - path: /guestbook
+           - path: /
              backend:
                serviceName: frontend
                servicePort: 8080
