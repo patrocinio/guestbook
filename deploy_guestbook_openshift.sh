@@ -83,6 +83,10 @@ function addSCC {
   oc adm policy add-scc-to-user anyuid -z privileged
 }
 
+function defineGuestbookConfigMap {
+  oc create configmap guestbook-config --from-literal=backend-url=backend-guestbook.patrocinio9-fa9ee67c9ab6a7791435450358e564cc-0001.us-east.containers.appdomain.cloud
+}
+
 #createProject
 
 #defineClusterImagePolicy
@@ -102,6 +106,8 @@ oc project guestbook
 #deployBackend
 #deployBackendService
 #exposeBackend
+
+#defineGuestbookConfigMap
 
 deployFrontend
 #deployFrontendService

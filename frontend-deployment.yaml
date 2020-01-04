@@ -25,10 +25,10 @@ spec:
         command: ["/bin/sh"]
         args:
         - "-c"
-        - "sed 's/XXBACKENDXX/'$BACKEND_URL'/g' /usr/share/nginx/html/controllers.js > /tmp/controllers.js; mv /tmp/controllers.js /usr/share/nginx/html/controllers.js; nginx -g 'daemon off;'"
+        - "sed s/XXBACKENDXX/$BACKEND_URL/g /usr/share/nginx/html/controllers.js > /tmp/controllers.js; mv /tmp/controllers.js /usr/share/nginx/html/controllers.js; nginx -g 'daemon off;'"
         env:
         - name: BACKEND_URL
-          value:
+          valueFrom:
             configMapKeyRef:
               name: guestbook-config
               key: backend-url
