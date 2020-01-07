@@ -1,7 +1,7 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: redis-master-pvc
+  name: mongo1-pvc
 spec:
   accessModes:
     - ReadWriteOnce

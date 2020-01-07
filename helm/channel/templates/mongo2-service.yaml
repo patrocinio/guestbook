@@ -1,0 +1,26 @@
+apiVersion: app.ibm.com/v1alpha1
+kind: Deployable
+metadata:
+  name: mongo2-service
+  annotations:
+#    app.ibm.com/is-local-deployable: "false"
+  labels:
+    app: mongo2
+spec:
+  template:
+
+    apiVersion: v1
+    kind: Service
+    metadata:
+      name: mongo2
+      labels:
+        app: mongo2
+    spec:
+      type: NodePort
+      ports:
+      - name: mongo
+        port: 27017
+        targetPort: 27017
+        nodePort: 30018
+      selector:
+        app: mongo2

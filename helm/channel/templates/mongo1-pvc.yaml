@@ -1,19 +1,17 @@
-
 apiVersion: app.ibm.com/v1alpha1
 kind: Deployable
 metadata:
-  name: redis-master-pvc
+  name: mongo1-pvc
   annotations:
 #    app.ibm.com/is-local-deployable: "false"
   labels:
-    app: redis
-    tier: backend
+    app: mongo1
 spec:
   template:
     kind: PersistentVolumeClaim
     apiVersion: v1
     metadata:
-      name: redis-master-pvc
+      name: mongo1-pvc
     spec:
       accessModes:
         - ReadWriteOnce

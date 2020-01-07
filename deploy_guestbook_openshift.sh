@@ -4,32 +4,6 @@ function createProject {
   oc new-project guestbook
 }
 
-function deployRedisMasterStorage {
-  oc apply -f redis-master-pvc.yaml
-}
-
-function deployRedisMaster {
-  oc delete -f $BASE_URL/redis-master-deployment.yaml
-  oc apply -f $BASE_URL/redis-master-deployment.yaml
-}
-
-function deployRedisMasterService {
-  oc apply -f $BASE_URL/redis-master-service.yaml
-}
-
-function deployRedisSlave {
-  oc delete -f $BASE_URL/redis-slave-deployment.yaml
-  oc apply -f $BASE_URL/redis-slave-deployment.yaml
-}
-
-function deployRedisSlaveStorage {
-  oc apply -f redis-slave-pvc.yaml
-}
-
-function deployRedisSlaveService {
-  oc apply -f $BASE_URL/redis-slave-service.yaml
-}
-
 function deployFrontend {
   oc delete -f $BASE_URL/frontend-deployment.yaml
   oc apply -f $BASE_URL/frontend-deployment.yaml
@@ -82,25 +56,29 @@ function defineGuestbookConfigMap {
   oc create configmap guestbook-config --from-literal=backend-url=backend-guestbook.patrocinio9-fa9ee67c9ab6a7791435450358e564cc-0001.us-east.containers.appdomain.cloud
 }
 
-function deployRedisMasterConfigMap {
-  oc apply -f redis-master-configmap.yaml
+function  deployMongoPVC {
+  oc apply -f mongo1-pvc.yaml
+  oc apply -f mongo2-pvc.yaml
+}
+
+function deployMongo {
+  oc apply -f mongo1-deployment.yaml
+}
+
+function deployMongoService {
+  oc apply -f mongo1-service.yaml
 }
 
 #createProject
 
-#defineClusterImagePolicy
+defineClusterImagePolicy
 #addSCC
 
 oc project guestbook
 
-#deployRedisMasterStorage
-#deployRedisMasterConfigMap
-#deployRedisMaster
-#deployRedisMasterService
-
-#deployRedisSlaveStorage
-#deployRedisSlave
-deployRedisSlaveService
+#deployMongoPVC
+#deployMongo
+#deployMongoService
 
 #deployBackend
 #deployBackendService

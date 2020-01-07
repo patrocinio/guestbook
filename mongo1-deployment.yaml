@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongo1
+spec:
+  selector:
+    matchLabels:
+      app: mongo1
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: mongo1
+    spec:
+      volumes:
+        - name: mongo-data
+          persistentVolumeClaim:
+            claimName: mongo1-pvc
+      terminationGracePeriodSeconds: 10
+      containers:
+      - name: mongo
+        image: mongo
+        command:
+        - mongod
+        - "--bind_ip_all"
+        - "--replSet"
+        - rs0
+        ports:
+        - containerPort: 27017
+        volumeMounts:
+        - name: mongo-data
+          mountPath: /data/db
