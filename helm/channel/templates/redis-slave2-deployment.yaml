@@ -1,7 +1,7 @@
 apiVersion: app.ibm.com/v1alpha1
 kind: Deployable
 metadata:
-  name: redis-master-deployment
+  name: redis-slave2-deployment
   annotations:
 #    app.ibm.com/is-local-deployable: "false"
   labels:
@@ -12,25 +12,25 @@ spec:
     apiVersion: apps/v1 #  for k8s versions before 1.9.0 use apps/v1beta2  and before 1.8.0 use extensions/v1beta1
     kind: Deployment
     metadata:
-      name: redis-master
+      name: redis-slave2
     spec:
       selector:
         matchLabels:
           app: redis
-          role: master
+          role: slave2
           tier: backend
       replicas: 1
       template:
         metadata:
           labels:
             app: redis
-            role: master
+            role: slave2
             tier: backend
         spec:
           volumes:
             - name: data
               persistentVolumeClaim:
-                claimName: redis-master-pvc
+                claimName: redis-slave2-pvc
             - name: conf
               configMap:
                 name: redis-cluster
