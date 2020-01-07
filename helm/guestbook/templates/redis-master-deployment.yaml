@@ -20,15 +20,23 @@ spec:
         - name: data
           persistentVolumeClaim:
             claimName: redis-master-pvc
+        - name: conf
+          configMap:
+            name: redis-master-configmap
+            defaultMode: 0755
       containers:
       - name: master
-        image: k8s.gcr.io/redis:e2e  # or just image: redis
+        image: redis:5.0.1-alpine
         volumeMounts:
           - name: data
             mountPath: /data
+          - name: conf
+            mountPath: /conf
+        command: ["redis-server", "/conf/redis.conf"]
         resources:
           requests:
             cpu: 100m
             memory: 100Mi
         ports:
         - containerPort: 6379
+        - containerPort: 16379

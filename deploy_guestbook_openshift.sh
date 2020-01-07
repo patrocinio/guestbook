@@ -60,11 +60,6 @@ function exposeBackend {
   oc expose svc backend
 }
 
-function exposeRedisMaster {
-  oc delete route redis-master
-  oc expose svc redis-master --port 6379
-}
-
 function obtainRoute {
   oc get route $1 -o jsonpath='{@.status.ingress[0].host}'
 }
@@ -87,6 +82,10 @@ function defineGuestbookConfigMap {
   oc create configmap guestbook-config --from-literal=backend-url=backend-guestbook.patrocinio9-fa9ee67c9ab6a7791435450358e564cc-0001.us-east.containers.appdomain.cloud
 }
 
+function deployRedisMasterConfigMap {
+  oc apply -f redis-master-configmap.yaml
+}
+
 #createProject
 
 #defineClusterImagePolicy
@@ -95,9 +94,9 @@ function defineGuestbookConfigMap {
 oc project guestbook
 
 #deployRedisMasterStorage
+#deployRedisMasterConfigMap
 #deployRedisMaster
-#deployRedisMasterService
-#exposeRedisMaster
+deployRedisMasterService
 
 #deployRedisSlaveStorage
 #deployRedisSlave
@@ -109,7 +108,7 @@ oc project guestbook
 
 #defineGuestbookConfigMap
 
-deployFrontend
+#deployFrontend
 #deployFrontendService
 #exposeGuestbook
 
