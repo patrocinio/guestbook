@@ -96,11 +96,11 @@ oc project guestbook
 #deployRedisMasterStorage
 #deployRedisMasterConfigMap
 #deployRedisMaster
-deployRedisMasterService
+#deployRedisMasterService
 
 #deployRedisSlaveStorage
 #deployRedisSlave
-#deployRedisSlaveService
+deployRedisSlaveService
 
 #deployBackend
 #deployBackendService

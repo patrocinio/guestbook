@@ -19,7 +19,7 @@ spec:
           app: redis
           role: slave
           tier: backend
-      replicas: 2
+      replicas: 1
       template:
         metadata:
           labels:
@@ -31,24 +31,23 @@ spec:
             - name: data
               persistentVolumeClaim:
                 claimName: redis-slave-pvc
-
+            - name: conf
+              configMap:
+                name: redis-cluster
+                defaultMode: 0755
           containers:
-          - name: slave
-            image: gcr.io/google_samples/gb-redisslave:v1
+          - name: master
+            image: redis:5.0.1-alpine
             volumeMounts:
               - name: data
                 mountPath: /data
+              - name: conf
+                mountPath: /conf
+            command: ["redis-server", "/conf/redis.conf"]
             resources:
               requests:
                 cpu: 100m
                 memory: 100Mi
-            env:
-            - name: GET_HOSTS_FROM
-              value: dns
-              # If your cluster config does not include a dns service, then to
-              # instead access an environment variable to find the master
-              # service's host, comment out the 'value: dns' line above, and
-              # uncomment the line below:
-              # value: env
             ports:
             - containerPort: 6379
+            - containerPort: 16379

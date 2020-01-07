@@ -7,8 +7,16 @@ metadata:
     role: slave
     tier: backend
 spec:
+  type: NodePort
   ports:
-  - port: 6379
+  - name: client
+    port: 6379
+    targetPort: 6379
+    nodePort: 30380
+  - name: gossip
+    port: 16379
+    targetPort: 16379
+    nodePort: 31380
   selector:
     app: redis
     role: slave

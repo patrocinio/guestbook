@@ -22,7 +22,7 @@ spec:
             claimName: redis-master-pvc
         - name: conf
           configMap:
-            name: redis-master-configmap
+            name: redis-cluster
             defaultMode: 0755
       containers:
       - name: master
