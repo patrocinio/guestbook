@@ -4,5 +4,5 @@ var cfg = rs.conf()
 cfg.members[0].host="patrocinio8-fa9ee67c9ab6a7791435450358e564cc-0001.us-east.containers.appdomain.cloud:30017"
 rs.reconfig(cfg)
 
-rs.add("patrocinio-iks-fa9ee67c9ab6a7791435450358e564cc-0000.us-east.containers.appdomain.cloud:30017")
-rs.add("patrocinio8-fa9ee67c9ab6a7791435450358e564cc-0001.us-east.containers.appdomain.cloud:30018")
+rs.add("patrocinio9-fa9ee67c9ab6a7791435450358e564cc-0001.us-east.containers.appdomain.cloud:30017")
+rs.add("patrocinio9-fa9ee67c9ab6a7791435450358e564cc-0001.us-east.containers.appdomain.cloud:30018")

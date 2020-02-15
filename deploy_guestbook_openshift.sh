@@ -69,26 +69,26 @@ function deployMongoService {
   oc apply -f mongo1-service.yaml
 }
 
-#createProject
+createProject
 
 defineClusterImagePolicy
-#addSCC
+addSCC
 
 oc project guestbook
 
-#deployMongoPVC
-#deployMongo
-#deployMongoService
+deployMongoPVC
+deployMongo
+deployMongoService
 
-#deployBackend
-#deployBackendService
-#exposeBackend
+deployBackend
+deployBackendService
+exposeBackend
 
-#defineGuestbookConfigMap
+defineGuestbookConfigMap
 
-#deployFrontend
-#deployFrontendService
-#exposeGuestbook
+deployFrontend
+deployFrontendService
+exposeGuestbook
 
 ROUTE=$(obtainRoute frontend)
 echo Frontend route: $ROUTE
