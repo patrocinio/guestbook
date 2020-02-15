@@ -1,4 +1,7 @@
 cd helm
 helm package guestbook
-helm delete --purge guestbook --tls
-helm install guestbook -n guestbook --namespace guestbook --tls -f guestbook/values-openshift.yaml
+
+HELM_OPTIONS=--tls
+
+helm delete --purge guestbook $HELM_OPTIONS
+helm install guestbook -n guestbook --namespace guestbook $HELM_OPTIONS -f guestbook/values-openshift.yaml
