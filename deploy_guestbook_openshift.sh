@@ -83,32 +83,32 @@ function addSCC {
   oc adm policy add-scc-to-user anyuid -z privileged
 }
 
-#createProject
+createProject
 
 defineClusterImagePolicy
-#addSCC
+addSCC
 
 oc project guestbook
 
-#deployRedisMasterStorage
-#deployRedisMaster
-#deployRedisMasterService
-#exposeRedisMaster
+deployRedisMasterStorage
+deployRedisMaster
+deployRedisMasterService
+exposeRedisMaster
 
-#deployRedisSlaveStorage
-#deployRedisSlave
-#deployRedisSlaveService
+deployRedisSlaveStorage
+deployRedisSlave
+deployRedisSlaveService
 
-#deployBackend
-#deployBackendService
-#exposeBackend
+deployBackend
+deployBackendService
+exposeBackend
 
-#deployFrontend
-#deployFrontendService
-#exposeGuestbook
+deployFrontend
+deployFrontendService
+exposeGuestbook
 
 ROUTE=$(obtainRoute frontend)
 echo Frontend route: $ROUTE
 
-#ROUTE=$(obtainRoute redis-master)
-#echo Redis master route: $ROUTE
+ROUTE=$(obtainRoute redis-master)
+echo Redis master route: $ROUTE
