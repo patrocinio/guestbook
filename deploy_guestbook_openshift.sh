@@ -83,27 +83,27 @@ function addSCC {
   oc adm policy add-scc-to-user anyuid -z privileged
 }
 
-#createProject
+createProject
 
-#defineClusterImagePolicy
-#addSCC
+defineClusterImagePolicy
+addSCC
 
 oc project guestbook
 
-#deployRedisMasterStorage
-#deployRedisMaster
-#deployRedisMasterService
-#exposeRedisMaster
+deployRedisMasterStorage
+deployRedisMaster
+deployRedisMasterService
+exposeRedisMaster
 
-#deployRedisSlaveStorage
-#deployRedisSlave
-#deployRedisSlaveService
+deployRedisSlaveStorage
+deployRedisSlave
+deployRedisSlaveService
 
-#deployBackend
-#deployBackendService
-#exposeBackend
+deployBackend
+deployBackendService
+exposeBackend
 
-#deployFrontend
+deployFrontend
 deployFrontendService
 exposeGuestbook
 

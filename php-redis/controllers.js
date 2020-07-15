@@ -1,6 +1,6 @@
 var redisApp = angular.module('redis', ['ui.bootstrap']);
 
-const BACKEND = "http://backend.patrocinio-iks-fa9ee67c9ab6a7791435450358e564cc-0000.us-east.containers.appdomain.cloud"
+const BACKEND = "http://backend.patrocinio-ocp43-ddd93d3a0fef01f6b396b69d343df410-0000.us-east.containers.appdomain.cloud"
 
 function RedisController() {
   console.log ("Constructor");
