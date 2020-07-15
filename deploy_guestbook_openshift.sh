@@ -77,6 +77,20 @@ function defineRoleBinding {
   oc apply -f rolebinding.yaml
 }
 
+function deployMessaging {
+  oc apply -f messaging-deployment.yaml
+}
+
+function deployMessagingService {
+  oc apply -f messaging-service.yaml
+}
+
+function deployConsumer {
+  oc apply -f consumer-deployment.yaml
+}
+
+
+
 function addSCC {
   oc create sa privileged
   oc adm policy add-scc-to-user privileged -z privileged
@@ -99,18 +113,19 @@ deployRedisSlaveStorage
 deployRedisSlave
 deployRedisSlaveService
 
+deployMessaging
+deployMessagingService
+
+deployConsumer
+
+
 deployBackend
 deployBackendService
 exposeBackend
 
 deployFrontend
-<<<<<<< HEAD
 deployFrontendService
 exposeGuestbook
-=======
-#deployFrontendService
-#exposeGuestbook
->>>>>>> e3c931337723d86b6388b7a558197ae13ae893cd
 
 ROUTE=$(obtainRoute frontend)
 echo Frontend route: $ROUTE
