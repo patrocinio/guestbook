@@ -31,8 +31,8 @@ function deployRedisSlaveService {
 }
 
 function deployFrontend {
-  oc delete -f $BASE_URL/frontend-deployment.yaml
-  oc apply -f $BASE_URL/frontend-deployment.yaml
+  oc delete -f $BASE_URL/frontend-deployment-openshift.yaml
+  oc apply -f $BASE_URL/frontend-deployment-openshift.yaml
 }
 
 function deployFrontendService {
@@ -104,8 +104,13 @@ deployBackendService
 exposeBackend
 
 deployFrontend
+<<<<<<< HEAD
 deployFrontendService
 exposeGuestbook
+=======
+#deployFrontendService
+#exposeGuestbook
+>>>>>>> e3c931337723d86b6388b7a558197ae13ae893cd
 
 ROUTE=$(obtainRoute frontend)
 echo Frontend route: $ROUTE
