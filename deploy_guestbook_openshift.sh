@@ -85,7 +85,7 @@ function addSCC {
 
 #createProject
 
-defineClusterImagePolicy
+#defineClusterImagePolicy
 #addSCC
 
 oc project guestbook
@@ -103,12 +103,12 @@ oc project guestbook
 #deployBackendService
 #exposeBackend
 
-#deployFrontend
+deployFrontend
 #deployFrontendService
 #exposeGuestbook
 
 ROUTE=$(obtainRoute frontend)
 echo Frontend route: $ROUTE
 
-#ROUTE=$(obtainRoute redis-master)
-#echo Redis master route: $ROUTE
+ROUTE=$(obtainRoute redis-master)
+echo Redis master route: $ROUTE
