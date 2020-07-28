@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: php-redis
-        image: docker.io/patrocinio/gb-frontend-amd64:openshift
+        image: docker.io/patrocinio/gb-frontend-amd64:v7
         imagePullPolicy: Always
         resources:
           requests:
