@@ -3,6 +3,8 @@ var redisApp = angular.module('redis', ['ui.bootstrap']);
 function RedisController() {}
 
 RedisController.prototype.onRedis = function() {
+  console.log ("append");
+
     this.http_.get("guestbook.php?cmd=append&key=messages&value=" + this.scope_.msg)
             .success(angular.bind(this, function(data) {
               console.log(data);
@@ -11,6 +13,8 @@ RedisController.prototype.onRedis = function() {
 };
 
 redisApp.controller('RedisCtrl', function ($scope, $http, $location) {
+    console.log ("Initializing");
+
         $scope.controller = new RedisController();
         $scope.controller.scope_ = $scope;
         $scope.controller.location_ = $location;
