@@ -12,8 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM docker.io/centos/php-71-centos7
+FROM nginxinc/nginx-unprivileged
 
-ADD guestbook.php /var/www/html/guestbook.php
-ADD controllers.js /var/www/html/controllers.js
-ADD index.html /var/www/html/index.html
+ADD controllers.js /usr/share/nginx/html/controllers.js
+ADD index.html /usr/share/nginx/html/index.html
