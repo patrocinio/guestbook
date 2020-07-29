@@ -29,6 +29,7 @@ var router = express.Router();              // get an instance of the express Ro
 
 
 router.get('/get', function(req, res) {
+  console.log ("Retrieving messages...")
 	backend.getMessages (req, res);
 });
 
