@@ -7,7 +7,7 @@ spec:
     matchLabels:
       app: guestbook
       tier: frontend
-  replicas: 3
+  replicas: 1
   template:
     metadata:
       labels:
@@ -17,7 +17,7 @@ spec:
       containers:
       - name: php-redis
 #        image: gcr.io/google_samples/gb-frontend:v5
-        image: docker.io/patrocinio/gb-frontend-amd64:v8
+        image: docker.io/patrocinio/gb-frontend-amd64:v9
         imagePullPolicy: Always
         resources:
           requests:

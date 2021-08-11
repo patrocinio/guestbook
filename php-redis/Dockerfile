@@ -12,8 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM nginxinc/nginx-unprivileged
+#FROM nginxinc/nginx-unprivileged
 
-ADD controllers.js /usr/share/nginx/html/controllers.js
-ADD index.html /usr/share/nginx/html/index.html
-ADD guestbook.php /usr/share/nginx/html/guestbook.php
+FROM php:7.4-apache-buster
+
+RUN apt update && apt -y install zip unzip git-all
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+
+COPY . .
+
+RUN composer update
