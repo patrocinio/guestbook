@@ -1,0 +1,5 @@
+echo Logging to IBM Cloud
+#ibmcloud login --apikey ${IC_API_KEY} -r us-east
+
+echo Connecting to cluster $CLUSTER_NAME
+ibmcloud ks cluster config --cluster ${CLUSTER_NAME}

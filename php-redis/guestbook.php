@@ -19,6 +19,7 @@ if (isset($_GET['cmd']) === true) {
   ]);
 
   $value = $client->get($_GET['key']);
+  $value = "Banana";
 
   $host = 'redis-master';
   if (getenv('GET_HOSTS_FROM') == 'env') {

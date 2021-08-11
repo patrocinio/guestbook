@@ -23,6 +23,10 @@ redisApp.controller('RedisCtrl', function ($scope, $http, $location) {
         $scope.controller.http_.get("guestbook.php?cmd=get&key=messages")
             .success(function(data) {
                 console.log(data);
-                $scope.messages = data.data.split(",");
+                if (data.data) { 
+                  $scope.messages = data.data.split(",");
+                } else {
+                  $scope.messages = "";
+                }
             });
 });

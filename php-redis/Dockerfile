@@ -16,3 +16,4 @@ FROM nginxinc/nginx-unprivileged
 
 ADD controllers.js /usr/share/nginx/html/controllers.js
 ADD index.html /usr/share/nginx/html/index.html
+ADD guestbook.php /usr/share/nginx/html/guestbook.php
