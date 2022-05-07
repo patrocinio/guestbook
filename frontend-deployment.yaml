@@ -15,14 +15,8 @@ spec:
         tier: frontend
     spec:
       containers:
-<<<<<<< HEAD
       - name: frontend
-        image: docker.io/patrocinio/gb-frontend-amd64:backend
-=======
-      - name: php-redis
-#        image: gcr.io/google_samples/gb-frontend:v5
-        image: docker.io/patrocinio/gb-frontend-amd64:v9
->>>>>>> 3de525a98eda4a24fc0e906a853ca3f58f0e306f
+        image: docker.io/patrocinio/gb-frontend-amd64:multiple-fields
         imagePullPolicy: Always
         resources:
           requests:

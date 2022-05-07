@@ -12,20 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-<<<<<<< HEAD
 FROM nginx:latest
 
 ADD controllers.js /usr/share/nginx/html/controllers.js
 ADD index.html /usr/share/nginx/html/index.html
-=======
-#FROM nginxinc/nginx-unprivileged
-
-FROM php:7.4-apache-buster
-
-RUN apt update && apt -y install zip unzip git-all
-COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
-
-COPY . .
-
-RUN composer update
->>>>>>> 3de525a98eda4a24fc0e906a853ca3f58f0e306f
