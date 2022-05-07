@@ -1,5 +1,22 @@
+/**
+ * Copyright 2016 The Kubernetes Authors All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 var redisApp = angular.module('redis', ['ui.bootstrap']);
 
+<<<<<<< HEAD
 const BACKEND = "http://backend-guestbook.patrocinio8-fa9ee67c9ab6a7791435450358e564cc-0001.us-east.containers.appdomain.cloud"
 
 function RedisController() {
@@ -13,6 +30,21 @@ RedisController.prototype.onRedis = function() {
     }, function(error) {
       console.log (error);
     })
+=======
+/**
+ * Constructor
+ */
+function RedisController() {}
+
+RedisController.prototype.onRedis = function() {
+    this.scope_.messages.push(this.scope_.msg);
+    this.scope_.msg = "";
+    var value = this.scope_.messages.join();
+    this.http_.get("guestbook.php?cmd=set&value=" + value)
+            .success(angular.bind(this, function(data) {
+                this.scope_.redisResponse = "Updated.";
+            }));
+>>>>>>> 3de525a98eda4a24fc0e906a853ca3f58f0e306f
 };
 
 function retrieveMessages($scope) {
@@ -34,6 +66,14 @@ redisApp.controller('RedisCtrl', function ($scope, $http, $location) {
         $scope.controller.location_ = $location;
         $scope.controller.http_ = $http;
 
+<<<<<<< HEAD
         setInterval(() => { retrieveMessages($scope) }, 5000);
 
+=======
+        $scope.controller.http_.get("guestbook.php?cmd=get")
+            .success(function(data) {
+                console.log(data);
+                $scope.messages = data.data.split(",");
+            });
+>>>>>>> 3de525a98eda4a24fc0e906a853ca3f58f0e306f
 });

@@ -12,7 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+<<<<<<< HEAD
 TAG = backend
+=======
+TAG = v9
+>>>>>>> 3de525a98eda4a24fc0e906a853ca3f58f0e306f
 REGISTRY=docker.io/patrocinio
 #REGISTRY = gcr.io/google-samples
 ARCH ?= $(shell go env GOARCH)
