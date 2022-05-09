@@ -21,7 +21,6 @@ ini_set('display_errors', 1);
 
 require __DIR__ . '/vendor/autoload.php';
 
-<<<<<<< HEAD
 function getRedisMaster () {
   $host = 'redis-master';
   if (getenv('GET_HOSTS_FROM') == 'env') {
@@ -92,37 +91,6 @@ if (isset($_GET['cmd']) === true) {
 
   header('Content-Type: application/json');
   print('{"data": "' . $value . '"}');
-=======
-if (isset($_GET['cmd']) === true) {
-  $host = 'redis-master';
-  if (getenv('GET_HOSTS_FROM') == 'env') {
-    $host = getenv('REDIS_LEADER_SERVICE_HOST');
-  }
-  header('Content-Type: application/json');
-  if ($_GET['cmd'] == 'set') {
-    $client = new Predis\Client([
-      'scheme' => 'tcp',
-      'host'   => $host,
-      'port'   => 6379,
-    ]);
-
-    $client->set('guestbook', $_GET['value']);
-    print('{"message": "Updated"}');
-  } else {
-    $host = 'redis-slave';
-    if (getenv('GET_HOSTS_FROM') == 'env') {
-      $host = getenv('REDIS_FOLLOWER_SERVICE_HOST');
-    }
-    $client = new Predis\Client([
-      'scheme' => 'tcp',
-      'host'   => $host,
-      'port'   => 6379,
-    ]);
-
-    $value = $client->get('guestbook');
-    print('{"data": "' . $value . '"}');
-  }
->>>>>>> 3de525a98eda4a24fc0e906a853ca3f58f0e306f
 } else {
   phpinfo();
 } ?>

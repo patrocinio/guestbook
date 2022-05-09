@@ -90,7 +90,7 @@ addSCC
 
 oc project guestbook
 
-#deployRedisMasterStorage
+deployRedisMasterStorage
 deployRedisMaster
 deployRedisMasterService
 exposeRedisMaster

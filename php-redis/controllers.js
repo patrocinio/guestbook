@@ -16,64 +16,33 @@
 
 var redisApp = angular.module('redis', ['ui.bootstrap']);
 
-<<<<<<< HEAD
-const BACKEND = "http://backend-guestbook.patrocinio8-fa9ee67c9ab6a7791435450358e564cc-0001.us-east.containers.appdomain.cloud"
+const BACKEND = "http://backend-guestbook.patrocinio-openshift-7db4ca5a05b33ab7fcab81e11eea210d-0000.us-east.containers.appdomain.cloud"
 
-function RedisController() {
-  console.log ("Constructor");
-}
 
-RedisController.prototype.onRedis = function() {
-  this.http_.get (BACKEND + "/append/" + this.scope_.msg)
-    .then(function(result) {
-      console.log("Append: ", result);
-    }, function(error) {
-      console.log (error);
-    })
-=======
-/**
- * Constructor
- */
 function RedisController() {}
 
 RedisController.prototype.onRedis = function() {
-    this.scope_.messages.push(this.scope_.msg);
-    this.scope_.msg = "";
-    var value = this.scope_.messages.join();
-    this.http_.get("guestbook.php?cmd=set&value=" + value)
-            .success(angular.bind(this, function(data) {
-                this.scope_.redisResponse = "Updated.";
-            }));
->>>>>>> 3de525a98eda4a24fc0e906a853ca3f58f0e306f
+  scope = this.scope_;
+  this.http_.get (BACKEND + "/append/" + scope.msg)
+    .then(function(result) {
+      console.log("Append: ", result);
+      scope.messages = result.data.data.split(",");
+    }, function(error) {
+      console.log (error);
+    })
 };
 
-function retrieveMessages($scope) {
-  console.log ("Retrieving messages...");
-  $scope.controller.http_.get(BACKEND + "/get")
-      .then(function(result) {
-          console.log("Get: ", result);
-          $scope.messages = result.data.data.split(",");
-          console.log ("Messages ", $scope.messages);
-      }, function(error) {
-        console.log(error);
-      });
-}
-
 redisApp.controller('RedisCtrl', function ($scope, $http, $location) {
-        console.log ("Redis controller");
         $scope.controller = new RedisController();
         $scope.controller.scope_ = $scope;
         $scope.controller.location_ = $location;
         $scope.controller.http_ = $http;
 
-<<<<<<< HEAD
-        setInterval(() => { retrieveMessages($scope) }, 5000);
-
-=======
-        $scope.controller.http_.get("guestbook.php?cmd=get")
-            .success(function(data) {
-                console.log(data);
-                $scope.messages = data.data.split(",");
+        $http.get(BACKEND + "/get")
+            .then(function(result) {
+                console.log("Get: ", result);
+                $scope.messages = result.data.data.split(",");
+            }, function(error) {
+              console.log(error);
             });
->>>>>>> 3de525a98eda4a24fc0e906a853ca3f58f0e306f
 });
