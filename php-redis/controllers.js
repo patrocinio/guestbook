@@ -18,31 +18,38 @@ var redisApp = angular.module('redis', ['ui.bootstrap']);
 
 const BACKEND = "http://backend-guestbook.patrocinio-openshift-7db4ca5a05b33ab7fcab81e11eea210d-0000.us-east.containers.appdomain.cloud"
 
-
-function RedisController() {}
+function RedisController() {
+  console.log ("Constructor");
+}
 
 RedisController.prototype.onRedis = function() {
-  scope = this.scope_;
-  this.http_.get (BACKEND + "/append/" + scope.msg)
+  this.http_.get (BACKEND + "/append/" + this.scope_.msg)
     .then(function(result) {
       console.log("Append: ", result);
-      scope.messages = result.data.data.split(",");
     }, function(error) {
       console.log (error);
     })
 };
 
+function retrieveMessages($scope) {
+  console.log ("Retrieving messages...");
+  $scope.controller.http_.get(BACKEND + "/get")
+      .then(function(result) {
+          console.log("Get: ", result);
+          $scope.messages = result.data.data.split(",");
+          console.log ("Messages ", $scope.messages);
+      }, function(error) {
+        console.log(error);
+      });
+}
+
 redisApp.controller('RedisCtrl', function ($scope, $http, $location) {
+        console.log ("Redis controller");
         $scope.controller = new RedisController();
         $scope.controller.scope_ = $scope;
         $scope.controller.location_ = $location;
         $scope.controller.http_ = $http;
 
-        $http.get(BACKEND + "/get")
-            .then(function(result) {
-                console.log("Get: ", result);
-                $scope.messages = result.data.data.split(",");
-            }, function(error) {
-              console.log(error);
-            });
+        setInterval(() => { retrieveMessages($scope) }, 5000);
+
 });
