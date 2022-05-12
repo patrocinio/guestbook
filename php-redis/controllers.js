@@ -36,7 +36,12 @@ function retrieveMessages($scope) {
   $scope.controller.http_.get(BACKEND + "/get")
       .then(function(result) {
           console.log("Get: ", result);
-          $scope.messages = result.data.data.split(",");
+          data = result.data.data;
+          if (data == null) {
+            $scope.messages = null;  
+          } else {
+            $scope.messages = result.data.data.split(",");
+          }
           console.log ("Messages ", $scope.messages);
       }, function(error) {
         console.log(error);
