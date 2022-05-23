@@ -2,7 +2,7 @@ var redisApp = angular.module('redis', ['ui.bootstrap']);
 
 // const BACKEND = "http://backend-guestbook.patrocinio-ocp43-ddd93d3a0fef01f6b396b69d343df410-0000.us-east.containers.appdomain.cloud";
 
-const BACKEND = "http://backend-guestbook.webb-cp4mcm13-473694-fa9ee67c9ab6a7791435450358e564cc-0000.us-south.containers.appdomain.cloud";
+const BACKEND = "http://backend-guestbook.patrocinio-openshift-7db4ca5a05b33ab7fcab81e11eea210d-0000.us-east.containers.appdomain.cloud";
 
 
 function RedisController() {

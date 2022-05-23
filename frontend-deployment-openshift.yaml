@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: docker.io/patrocinio/gb-frontend-amd64:sync_redis
+        image: docker.io/patrocinio/gb-frontend-amd64:multiple_fields_v2
         imagePullPolicy: Always
         resources:
           requests:
@@ -24,6 +24,6 @@ spec:
             memory: 100Mi
         env:
         - name: BACKEND
-          value: backend-guestbook.patrocinio9-fa9ee67c9ab6a7791435450358e564cc-0001.us-east.containers.appdomain.cloud
+          value: backend-guestbook.patrocinio-openshift-7db4ca5a05b33ab7fcab81e11eea210d-0000.us-east.containers.appdomain.cloud
         ports:
         - containerPort: 80
