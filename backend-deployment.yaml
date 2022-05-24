@@ -13,6 +13,7 @@ spec:
       labels:
         app: guestbook
         tier: backend
+        component: backend
     spec:
       containers:
       - name: php-redis
