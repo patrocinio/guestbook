@@ -17,6 +17,7 @@ const {promisify} = require('util');
 const setAsync = promisify(master.set).bind(master);
 const getAsync = promisify(slave.get).bind(slave);
 
+console.log ("Master: ", master);
 const lock = promisify(require("redis-lock") (master));
 
 async function retrieveMessages () {
@@ -39,7 +40,7 @@ async function consume(channel, msg) {
     let messages = await retrieveMessages();
 		console.log ("==> Messages: ", messages);
 
-    if (messages == "") {
+    if (messages == "" || message == null) {
       messages = message;
     } else {
       messages += "," + message;

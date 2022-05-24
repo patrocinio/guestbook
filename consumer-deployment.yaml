@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: php-redis
-        image: docker.io/patrocinio/gb-consumer-amd64:sync_redis
+        image: docker.io/patrocinio/gb-consumer-amd64:multiple_fields_v2
         imagePullPolicy: Always
         resources:
           requests:
